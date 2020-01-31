@@ -3,41 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_accueil">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.journal_perso.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_accueil"
+        android:name="com.example.journal_perso.ui.accueil.AccueilFragment"
+        android:label="@string/menu_accueil"
+        tools:layout="@layout/fragment_accueil" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.journal_perso.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_mes_esapces"
+        android:name="com.example.journal_perso.ui.mesEspaces.MesEspacesFragment"
+        android:label="@string/menu_mesEsapces"
+        tools:layout="@layout/fragment_mes_espaces" />
+
+   <fragment
+        android:id="@+id/nav_espaces_du_jour"
+        android:name="com.example.journal_perso.ui.esapcesDuJour.EspacesDuJourFragment"
+        android:label="@string/menu_espacesDuJour"
+        tools:layout="@layout/fragment_espaces_du_jour" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.journal_perso.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_consulter_donnees"
+        android:name="com.example.journal_perso.ui.mesDonnees.MesDonneesFragment"
+        android:label="@string/menu_consulterDonnees"
+        tools:layout="@layout/fragment_mes_donnees" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.journal_perso.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_calendrier"
+        android:name="com.example.journal_perso.ui.calendrier.CalendrierFragment"
+        android:label="@string/menu_calendrier"
+        tools:layout="@layout/fragment_calendrier" />
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="com.example.journal_perso.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.example.journal_perso.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/nav_parametres"
+        android:name="com.example.journal_perso.ui.parametres.ParametresFragment"
+        android:label="@string/menu_parametres"
+        tools:layout="@layout/fragment_parametres" />
 </navigation>
