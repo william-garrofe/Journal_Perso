@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtLogin" />
 
     <Button
-        android:id="@+id/btnOK"
+        android:id="@+id/btnConnexion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="155dp"
@@ -45,12 +45,11 @@
         android:onClick="callBack"
         android:text="Connexion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPasse" />
 
     <Button
-        android:id="@+id/btnOK2"
+        android:id="@+id/btnInscription"
         android:layout_width="125dp"
         android:layout_height="40dp"
         android:layout_marginStart="155dp"
@@ -59,7 +58,7 @@
         android:text="Inscription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnOK" />
+        app:layout_constraintTop_toBottomOf="@+id/btnConnexion" />
 
     <TextView
         android:id="@+id/textView"

@@ -19,7 +19,7 @@ public class AccueilFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         accueilViewModel =
                 ViewModelProviders.of(this).get(AccueilViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_accueil, container, false);
+        View root = inflater.inflate(R.layout.fragment_calendrier, container, false);
         return root;
     }
 }

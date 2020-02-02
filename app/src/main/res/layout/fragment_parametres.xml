@@ -5,24 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="102dp"
-        android:text="Modifier"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
         android:id="@+id/editText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
-        android:layout_marginTop="123dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="99dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -31,8 +19,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="162dp"
+        android:text="Modifier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText8" />
+
+    <Button
+        android:id="@+id/btnDeconnexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="135dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="135dp"
+        android:text="Deconnexion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/editText7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="99dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+
+    <EditText
+        android:id="@+id/editText8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
@@ -40,38 +66,22 @@
         android:layout_marginEnd="99dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Prénom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
-
-    <EditText
-        android:id="@+id/editText7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="99dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
-
-    <EditText
-        android:id="@+id/editText8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="99dp"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:text="Mot de passe"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="99dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Prénom"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText5" />
 

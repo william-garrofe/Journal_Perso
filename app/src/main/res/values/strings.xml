@@ -14,4 +14,11 @@
     <string name="menu_consulterDonnees">Mes données</string>
     <string name="menu_parametres">Paramètres</string>
     <string name="menu_calendrier">Calendrier</string>
+    <string name="title_activity_inscription">inscription</string>
+
+    <string-array name="typeIndicateur">
+        <item>Indicateur 1</item>
+        <item>Indicateur 2</item>
+        <item>Indicateur 3</item>
+    </string-array>
 </resources>
