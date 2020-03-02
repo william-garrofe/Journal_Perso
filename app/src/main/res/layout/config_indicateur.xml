@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="51dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/typeIndicateur" />
 
     <EditText
-        android:id="@+id/editText9"
+        android:id="@+id/editTextIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="39dp"
@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/switchCreneau"
         android:layout_width="102dp"
         android:layout_height="27dp"
         android:layout_marginStart="66dp"
@@ -68,10 +68,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText9" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextIndicateur" />
 
     <EditText
-        android:id="@+id/editText10"
+        android:id="@+id/tempsCreneau"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="39dp"
@@ -81,7 +81,7 @@
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toBottomOf="@+id/switchCreneau" />
 
     <Button
         android:id="@+id/button"
@@ -93,6 +93,6 @@
         android:text="Ajouter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText10" />
+        app:layout_constraintTop_toBottomOf="@+id/tempsCreneau" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

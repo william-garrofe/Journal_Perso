@@ -16,9 +16,8 @@
     <string name="menu_calendrier">Calendrier</string>
     <string name="title_activity_inscription">inscription</string>
 
-    <string-array name="typeIndicateur">
+    <string-array name="typeIndicateurNom">
         <item>Indicateur 1</item>
         <item>Indicateur 2</item>
-        <item>Indicateur 3</item>
     </string-array>
 </resources>
