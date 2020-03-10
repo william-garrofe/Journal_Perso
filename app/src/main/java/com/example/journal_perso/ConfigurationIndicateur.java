@@ -51,10 +51,6 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monSpinner.setAdapter(monAdaptater);
         monSpinner.setOnItemSelectedListener(this);
 
-        Intent i = getIntent();
-        espace dene = (espace)i.getSerializableExtra("Monobj");
-
-
         monButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

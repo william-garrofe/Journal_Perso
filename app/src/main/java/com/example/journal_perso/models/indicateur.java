@@ -2,9 +2,10 @@ package com.example.journal_perso.models;
 
 import com.example.journal_perso.ConfigurationIndicateur;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class indicateur {
+public class indicateur implements Serializable {
 
     private String nom;
     private int TypeIndic;
@@ -12,7 +13,7 @@ public class indicateur {
 
     public indicateur(String nom, int typeIndic, int id) {
         this.nom = nom;
-        TypeIndic = typeIndic;
+        this.TypeIndic = typeIndic;
         this.id = id;
     }
 

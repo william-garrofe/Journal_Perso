@@ -2,6 +2,7 @@ package com.example.journal_perso.ui.mesEspaces;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,6 +78,7 @@ public class MesEspacesFragment extends Fragment {
                 Toast.makeText(getContext(),
                         "Click ListItem Number " + position, Toast.LENGTH_LONG)
                         .show();
+                mListeView.setBackgroundColor(Color.BLUE);
             }
         });
 
