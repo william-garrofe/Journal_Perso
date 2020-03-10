@@ -1,11 +1,10 @@
 package com.example.journal_perso;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.text.CaseMap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,8 +15,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import java.util.Map;
-import java.util.Set;
+import com.example.journal_perso.models.espace;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ConfigurationIndicateur extends AppCompatActivity  implements AdapterView.OnItemSelectedListener{
 
@@ -28,8 +32,6 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
     private EditText monTempsCreneau;
     private Button monButton;
     private Spinner monSpinner;
-    private SharedPreferences mesPreferences;
-    private int numIndic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +51,15 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monSpinner.setAdapter(monAdaptater);
         monSpinner.setOnItemSelectedListener(this);
 
-        SharedPreferences mesPreferences = getSharedPreferences("mesPreferences", Context.MODE_PRIVATE);
+        Intent i = getIntent();
+        espace dene = (espace)i.getSerializableExtra("Monobj");
+
 
         monButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Save(v,numIndic);
-                Save(v);
+
+                ecrireFichier();
             }
         });
     }
@@ -63,17 +67,17 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String monText = parent.getItemAtPosition(position).toString();
-        numIndic = position;
+       // numIndic = position;
         switch (position)
         {
-            case 1:
+            case 0:
                 maCheckBox.setVisibility(View.VISIBLE);
                 monSwitchCreneau.setVisibility(View.VISIBLE);
                 monTempsCreneau.setVisibility(View.VISIBLE);
                 monButton.setVisibility(View.VISIBLE);
                 break;
 
-            case 2:
+            case 1:
                 monIndicateurNom.setVisibility(View.INVISIBLE);
                 monEditTextIndicateur.setVisibility(View.VISIBLE);
                 monSwitchCreneau.setVisibility(View.VISIBLE);
@@ -92,21 +96,26 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monEditTextIndicateur.setVisibility(View.INVISIBLE);
     }
 
-    public void Save(View view) {
-        int typeIndic=0;
-        String n;
-        if (typeIndic == 1)
-        {
-            n = monIndicateurNom.getText().toString();
-        }else{
-            n = monEditTextIndicateur.getText().toString();
-        }
+    public void ecrireFichier()
+    {
+        final GsonBuilder builder = new GsonBuilder();
+        final Gson gson = builder.create();
 
-        //String e = email.getText().toString();
-        SharedPreferences.Editor editor = mesPreferences.edit();
-        editor.putString("NameAppli", n);
-        //editor.putString(Email, e);
-        editor.commit();
+        String filename = monIndicateurNom.getText().toString();
+
+       // String fileContents = gson.toJson(this.);  //Ne pas oublier
+        FileOutputStream monFichier;
+
+        try
+        {
+            monFichier = openFileOutput(filename, Context.MODE_PRIVATE);
+            //monFichier.write(fileContents.getBytes());
+            monFichier.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

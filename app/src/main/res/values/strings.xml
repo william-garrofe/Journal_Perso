@@ -15,9 +15,10 @@
     <string name="menu_parametres">Paramètres</string>
     <string name="menu_calendrier">Calendrier</string>
     <string name="title_activity_inscription">inscription</string>
+    <string name="tIndic">Type indicateur :</string>
 
     <string-array name="typeIndicateurNom">
-        <item>Indicateur 1</item>
-        <item>Indicateur 2</item>
+        <item>1- CheckBox</item>
+        <item>2- TextEdit</item>
     </string-array>
 </resources>

@@ -7,15 +7,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.journal_perso.models.espace;
+import com.example.journal_perso.models.indicateur;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class monEspace extends AppCompatActivity {
+import java.util.Vector;
 
+public class monEspace extends AppCompatActivity {
+    private espace esp = new espace();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mon_espace);
 
+
+        esp.getNom();
         FloatingActionButton btnAjout = (FloatingActionButton) findViewById(R.id.btnAjout);
         btnAjout.setOnClickListener(new View.OnClickListener()
         {
