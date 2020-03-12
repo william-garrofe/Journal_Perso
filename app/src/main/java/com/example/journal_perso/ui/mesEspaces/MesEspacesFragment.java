@@ -36,6 +36,7 @@ public class MesEspacesFragment extends Fragment {
     private ScrollView mScrollView;
     private ListView mListeView;
     private Vector<indicateur> i;
+    private int posList;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -58,18 +59,9 @@ public class MesEspacesFragment extends Fragment {
         mScrollView = root.findViewById(R.id.scrollView2);
         mListeView = root.findViewById(R.id.list);
 
-        ArrayAdapter<espace> adapter = new ArrayAdapter<espace>(getActivity(), android.R.layout.simple_list_item_1,items);
+            ArrayAdapter<espace> adapter = new ArrayAdapter<espace>(getActivity(), android.R.layout.simple_list_item_1,items);
         mListeView.setAdapter(adapter);
 
-        monBouton.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getActivity(), monEspace.class);
-                intent.putExtra("Monobj", items[1]);
-                startActivity(intent);
-            }
-        });
 
         mListeView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,9 +70,23 @@ public class MesEspacesFragment extends Fragment {
                 Toast.makeText(getContext(),
                         "Click ListItem Number " + position, Toast.LENGTH_LONG)
                         .show();
-                mListeView.setBackgroundColor(Color.BLUE);
+                //mListeView.setBackgroundColor(Color.BLUE);
+                posList = position;
             }
         });
+
+
+
+        monBouton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getActivity(), monEspace.class);
+                intent.putExtra("Monobj", items[posList]);
+                startActivity(intent);
+            }
+        });
+
 
         return root;
 

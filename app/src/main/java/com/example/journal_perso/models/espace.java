@@ -5,7 +5,7 @@ import java.util.Vector;
 
 public class espace implements Serializable {
     private Vector<indicateur> cIndic;
-    private String nom;
+    private String nomEspace;
     private int id;
 
     public  espace(){
@@ -14,7 +14,7 @@ public class espace implements Serializable {
 
     public espace(Vector<indicateur> cIndic, String nom, int id) {
         this.cIndic = cIndic;
-        this.nom = nom;
+        this.nomEspace = nom;
         this.id = id;
     }
 
@@ -27,11 +27,11 @@ public class espace implements Serializable {
     }
 
     public String getNom() {
-        return nom;
+        return nomEspace;
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nomEspace = nom;
     }
 
     public int getId() {
@@ -46,7 +46,7 @@ public class espace implements Serializable {
     public String toString() {
         return "espace{" +
                 "cIndic=" + cIndic +
-                ", nom='" + nom + '\'' +
+                ", nom='" + nomEspace + '\'' +
                 ", id=" + id +
                 '}';
     }

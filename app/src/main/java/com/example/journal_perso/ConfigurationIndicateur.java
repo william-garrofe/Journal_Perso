@@ -32,6 +32,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
     private EditText monTempsCreneau;
     private Button monButton;
     private Spinner monSpinner;
+    private espace dene;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monTempsCreneau = findViewById(R.id.tempsCreneau);
         monButton = findViewById(R.id.buttonAjoutIndicateur);
         monSpinner = findViewById(R.id.typeIndicateur);
+        Intent i = getIntent();
+        dene = (espace)i.getSerializableExtra("MonObj");
 
         ArrayAdapter<CharSequence> monAdaptater = ArrayAdapter.createFromResource(this, R.array.typeIndicateurNom,android.R.layout.simple_spinner_item);
         monAdaptater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,18 +97,18 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
 
     public void ecrireFichier()
     {
-        final GsonBuilder builder = new GsonBuilder();
+        final GsonBuilder builder = new GsonBuilder().serializeNulls().disableHtmlEscaping().setPrettyPrinting();
         final Gson gson = builder.create();
 
-        String filename = monIndicateurNom.getText().toString();
+        String filename = "monJson.json";
 
-       // String fileContents = gson.toJson(this.);  //Ne pas oublier
+        String fileContents = gson.toJson(dene);  //Ne pas oublier
         FileOutputStream monFichier;
 
         try
         {
             monFichier = openFileOutput(filename, Context.MODE_PRIVATE);
-            //monFichier.write(fileContents.getBytes());
+            monFichier.write(fileContents.getBytes());
             monFichier.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
