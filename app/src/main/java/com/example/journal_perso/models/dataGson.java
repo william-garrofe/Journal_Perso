@@ -3,8 +3,6 @@ package com.example.journal_perso.models;
 import android.app.Activity;
 import android.content.Context;
 
-import androidx.fragment.app.Fragment;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,14 +16,14 @@ public class dataGson {
     private Vector<espace> e;
     private Context monContext;
     private Activity monActivity;
-    private Fragment monFrag;
+    //private Fragment monFrag;
     private String filename = "monJson.json";
 
-    public dataGson(Vector<espace> e, Context monContext, Activity monActivity, Fragment monFrag) {
+    public dataGson(Vector<espace> e, Context monContext, Activity monActivity) {
         this.e = e;
         this.monContext = monContext;
         this.monActivity = monActivity;
-        this.monFrag = monFrag;
+        // this.monFrag = monFrag;
     }
 
     //region getter/setter
@@ -54,13 +52,13 @@ public class dataGson {
         this.monActivity = monActivity;
     }
 
-    public Fragment getMonFrag() {
+    /*public Fragment getMonFrag() {
         return monFrag;
     }
 
     public void setMonFrag(Fragment monFrag) {
         this.monFrag = monFrag;
-    }
+    }*/
 
     @Override
     public String toString() {
