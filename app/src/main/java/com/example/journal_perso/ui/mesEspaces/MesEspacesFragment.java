@@ -65,7 +65,7 @@ public class MesEspacesFragment extends Fragment {
 
         final espace[] items = {
             new espace(i,"A",1),
-            new espace(i, "Patate",2)
+            new espace(i, "Patate",2
         };*/
 
         mScrollView = root.findViewById(R.id.scrollView2);
