@@ -1,10 +1,7 @@
 package com.example.journal_perso;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.journal_perso.models.espace;
 import com.google.gson.Gson;
@@ -49,6 +48,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         Intent i = getIntent();
         dene = (espace)i.getSerializableExtra("MonObj");
 
+
         ArrayAdapter<CharSequence> monAdaptater = ArrayAdapter.createFromResource(this, R.array.typeIndicateurNom,android.R.layout.simple_spinner_item);
         monAdaptater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monSpinner.setAdapter(monAdaptater);
@@ -57,7 +57,6 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 ecrireFichier();
             }
         });

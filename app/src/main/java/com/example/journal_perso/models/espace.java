@@ -7,6 +7,7 @@ public class espace implements Serializable {
     private Vector<indicateur> cIndic;
     private String nomEspace;
     private int id;
+    //private Timestamp date;
 
     public  espace(){
 
@@ -40,6 +41,10 @@ public class espace implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String nomEsp() {
+        return nomEspace;
     }
 
     @Override

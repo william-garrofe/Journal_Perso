@@ -10,20 +10,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Vector;
 
-public class dataGson {
+public class gsonFic {
     private Vector<espace> e;
     private Context monContext;
     private Activity monActivity;
-    //private Fragment monFrag;
     private String filename = "monJson.json";
 
-    public dataGson(Vector<espace> e, Context monContext, Activity monActivity) {
-        this.e = e;
-        this.monContext = monContext;
-        this.monActivity = monActivity;
-        // this.monFrag = monFrag;
+    public gsonFic() {
     }
 
     //region getter/setter
@@ -52,13 +48,21 @@ public class dataGson {
         this.monActivity = monActivity;
     }
 
-    /*public Fragment getMonFrag() {
-        return monFrag;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        gsonFic gsonFic = (gsonFic) o;
+        return Objects.equals(e, gsonFic.e) &&
+                Objects.equals(monContext, gsonFic.monContext) &&
+                Objects.equals(monActivity, gsonFic.monActivity) &&
+                Objects.equals(filename, gsonFic.filename);
     }
 
-    public void setMonFrag(Fragment monFrag) {
-        this.monFrag = monFrag;
-    }*/
+    @Override
+    public int hashCode() {
+        return Objects.hash(e, monContext, monActivity, filename);
+    }
 
     @Override
     public String toString() {
@@ -66,12 +70,10 @@ public class dataGson {
                 "e=" + e +
                 ", monContext=" + monContext +
                 ", monActivity=" + monActivity +
-                ", monFrag=" + monFrag +
                 '}';
     }
 
     //endregion
-
 
     public void ecrireFichier(espace dene, Context monContext)
     {
@@ -93,24 +95,27 @@ public class dataGson {
         }
     }
 
-    public void lectureFichier(){
-        Gson gson = new Gson();
-        String mJson="";
-        try{
-            InputStream f = monContext.openFileInput(filename);
+    public maData LireFichier(Context context, String FILENAME) {
+        maData mData;
+        final Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .setPrettyPrinting()
+                .create();
+
+        String resultFromJson = "";
+
+        try {
+            InputStream inputStream = context.openFileInput(FILENAME);
             int content;
-
-            while((content = f.read())!=-1){
-                mJson = mJson + (char)content;
+            while ((content = inputStream.read()) != -1) {
+                resultFromJson += (char) content;
             }
-            f.close();
-
-           //e = (espace)gson.fromJson(content, espace.class); //erreur
-
-        }catch (Exception e){
-
+            inputStream.close();
+            mData = gson.fromJson(resultFromJson, maData.class);
+            return mData;
+        } catch (Exception e) {
+            return null;
         }
-
     }
-
 }
