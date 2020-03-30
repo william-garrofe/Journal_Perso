@@ -42,7 +42,9 @@ public class MesEspacesFragment extends Fragment {
     private espace mEsp;
     private Vector<espace> mListEspace;
     private gsonFic gf;
-    private maData data;
+    //private Vector<maData> data;
+    private maData test;
+    private int pos = -1;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,24 +54,23 @@ public class MesEspacesFragment extends Fragment {
         Button monBouton = root.findViewById(R.id.btnCreerEspace);
         Button modifBouton = root.findViewById(R.id.btnModifierEspace);
         builder = new AlertDialog.Builder(getActivity());
-        gf = new gsonFic();
-        data = gf.LireFichier(getContext(), "monJson.json");
-
-        System.out.println(data);
-
-        i = new Vector<>();
-        mListEspace = new Vector<>();
-
-        /*indicateur indic = new indicateur("ABV",1,0);
-        i.addElement(indic);
-
-        final espace[] items = {
-            new espace(i,"A",1),
-            new espace(i, "Patate",2)
-        };*/
 
         mScrollView = root.findViewById(R.id.scrollView2);
         mListeView = root.findViewById(R.id.list);
+
+        i = new Vector<>();
+        gf = new gsonFic();
+        mListEspace = new Vector<>();
+
+        test = gf.LireFichier(getContext(), "monJson.json");
+
+       /* for(int j = 0; j<data.size(); j++){
+            test = data.get(j);
+
+            espace esp = new espace(test.cIndic,test.nomEspace,test.id);
+            mListEspace.addElement(esp);
+        }*/
+        System.out.println(test);
 
         ArrayAdapter<espace> adapter = new ArrayAdapter<espace>(getActivity(), android.R.layout.simple_list_item_1, mListEspace); //items
         mListeView.setAdapter(adapter);
@@ -103,8 +104,7 @@ public class MesEspacesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), monEspace.class);
-                //intent.putParcelableArrayListExtra("monObj",mListEspace);
-                intent.putExtra("Monobj", items[1]); //Problème
+                intent.putExtra("Monobj", mListEspace.get(pos)); //Problème
                 startActivity(intent);
             }
         });
@@ -116,6 +116,7 @@ public class MesEspacesFragment extends Fragment {
                 Toast.makeText(getContext(),
                         "Click ListItem Number " + position, Toast.LENGTH_LONG)
                         .show();
+                pos = position;
                 mListeView.setBackgroundColor(Color.BLUE);
             }
         });
