@@ -1,20 +1,19 @@
 package com.example.journal_perso.models;
 
-import com.example.journal_perso.ConfigurationIndicateur;
-
 import java.io.Serializable;
-import java.util.Vector;
 
 public class indicateur implements Serializable {
 
     private String nom;
     private int TypeIndic;
     private int id;
+    private String text;
 
-    public indicateur(String nom, int typeIndic, int id) {
+    public indicateur(String nom, int typeIndic, int id, String text) {
         this.nom = nom;
-        this.TypeIndic = typeIndic;
+        TypeIndic = typeIndic;
         this.id = id;
+        this.text = text;
     }
 
     public int getTypeIndic() {
@@ -41,12 +40,21 @@ public class indicateur implements Serializable {
         this.id = id;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     @Override
     public String toString() {
         return "indicateur{" +
                 "nom='" + nom + '\'' +
                 ", TypeIndic=" + TypeIndic +
                 ", id=" + id +
+                ", text='" + text + '\'' +
                 '}';
     }
 }

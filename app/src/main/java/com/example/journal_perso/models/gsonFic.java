@@ -75,12 +75,12 @@ public class gsonFic {
 
     //endregion
 
-    public void ecrireFichier(espace dene, Context monContext)
+    public void ecrireFichier(maData maDatas, Context monContext)
     {
         final GsonBuilder builder = new GsonBuilder().serializeNulls().disableHtmlEscaping().setPrettyPrinting();
         final Gson gson = builder.create();
 
-        String fileContents = gson.toJson(dene);  //Ne pas oublier
+        String fileContents = gson.toJson(maDatas);  //Ne pas oublier
         FileOutputStream monFichier;
 
         try

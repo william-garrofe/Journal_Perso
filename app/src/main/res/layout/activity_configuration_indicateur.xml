@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ConfigurationIndicateur">
 
+    <LinearLayout
+        android:id="@+id/maLayout"
+        android:layout_width="364dp"
+        android:layout_height="170dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginEnd="1dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
@@ -32,43 +45,27 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8"
         android:spinnerMode="dialog"/>
 
-    <CheckBox
-        android:id="@+id/checkBoxIndicateur"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="135dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="135dp"
-        android:text="Type indicateur 1"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/typeIndicateur" />
-
     <Switch
         android:id="@+id/switchCreneau"
         android:layout_width="102dp"
         android:layout_height="27dp"
         android:layout_marginStart="135dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="135dp"
         android:text="Créneau"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextIndicateur" />
+        app:layout_constraintTop_toBottomOf="@+id/maLayout" />
 
     <Button
         android:id="@+id/buttonAjoutIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="135dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="135dp"
         android:text="Ajouter"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,21 +84,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchCreneau" />
-
-    <EditText
-        android:id="@+id/editTextIndicateur"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="135dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="135dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Type indacteur 2"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxIndicateur" />
 
     <EditText
         android:id="@+id/nomIndicateur"

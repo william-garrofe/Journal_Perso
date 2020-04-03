@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -37,16 +36,12 @@ public class MesEspacesFragment extends Fragment {
     private MesEsapcesViewModel mesEsapcesViewModel;
     private ScrollView mScrollView;
     private ListView mListeView;
-    private Vector<indicateur> i;
     private AlertDialog.Builder builder;
-    private espace mEsp;
-    private Vector<espace> mListEspace;
-    private gsonFic gf;
-    //private Vector<maData> data;
-    private maData test;
+
+    final private gsonFic gf = new gsonFic();
     private int pos = -1;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mesEsapcesViewModel =
                 ViewModelProviders.of(this).get(MesEsapcesViewModel.class);
@@ -58,21 +53,15 @@ public class MesEspacesFragment extends Fragment {
         mScrollView = root.findViewById(R.id.scrollView2);
         mListeView = root.findViewById(R.id.list);
 
-        i = new Vector<>();
-        gf = new gsonFic();
-        mListEspace = new Vector<>();
+        maData maDatas = gf.LireFichier(getContext(), "monJson.json");
 
-        test = gf.LireFichier(getContext(), "monJson.json");
+        if (maDatas == null) {
+            maDatas = new maData();
+            maDatas.setMesEspaces(new Vector<espace>());
+        }
+        final maData finalDatas = maDatas;
 
-       /* for(int j = 0; j<data.size(); j++){
-            test = data.get(j);
-
-            espace esp = new espace(test.cIndic,test.nomEspace,test.id);
-            mListEspace.addElement(esp);
-        }*/
-        System.out.println(test);
-
-        ArrayAdapter<espace> adapter = new ArrayAdapter<espace>(getActivity(), android.R.layout.simple_list_item_1, mListEspace); //items
+        ArrayAdapter<espace> adapter = new ArrayAdapter<espace>(getActivity(), android.R.layout.simple_list_item_1, maDatas.getMesEspaces()); //items
         mListeView.setAdapter(adapter);
 
         monBouton.setOnClickListener(new View.OnClickListener() {
@@ -84,10 +73,12 @@ public class MesEspacesFragment extends Fragment {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        indicateur indic = new indicateur("", 1, 0);
-                        i.addElement(indic);
-                        mEsp = new espace(i, input.getText().toString(), 1);
-                        mListEspace.addElement(mEsp);
+                        Vector<indicateur> i = new Vector<>();
+                        espace esp = new espace(i, input.getText().toString(), finalDatas.getMesEspaces().size() + 1);
+
+                        finalDatas.getMesEspaces().addElement(esp);
+                        gf.ecrireFichier(finalDatas, getContext());
+
                     }
                 });
                 builder.setNegativeButton("Retour", new DialogInterface.OnClickListener() {
@@ -104,7 +95,8 @@ public class MesEspacesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), monEspace.class);
-                intent.putExtra("Monobj", mListEspace.get(pos)); //Problème
+                intent.putExtra("maData", finalDatas);
+                intent.putExtra("espace", finalDatas.getMesEspaces().get(pos));
                 startActivity(intent);
             }
         });
@@ -113,15 +105,14 @@ public class MesEspacesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();
                 pos = position;
-                mListeView.setBackgroundColor(Color.BLUE);
+                view.setBackgroundColor(Color.CYAN);
             }
         });
 
-        return root;
 
+        return root;
     }
+
+
 }
