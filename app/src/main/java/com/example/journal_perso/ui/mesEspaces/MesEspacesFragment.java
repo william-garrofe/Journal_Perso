@@ -28,6 +28,7 @@ import com.example.journal_perso.models.indicateur;
 import com.example.journal_perso.models.maData;
 import com.example.journal_perso.monEspace;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 
@@ -40,6 +41,7 @@ public class MesEspacesFragment extends Fragment {
 
     final private gsonFic gf = new gsonFic();
     private int pos = -1;
+    private String nomEspace;
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,10 +50,13 @@ public class MesEspacesFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_mes_espaces, container, false);
         Button monBouton = root.findViewById(R.id.btnCreerEspace);
         Button modifBouton = root.findViewById(R.id.btnModifierEspace);
+        Button btnSuppEsp = root.findViewById(R.id.btnSuppEspace);
         builder = new AlertDialog.Builder(getActivity());
 
         mScrollView = root.findViewById(R.id.scrollView2);
         mListeView = root.findViewById(R.id.list);
+        final ArrayList<String> list = new ArrayList<>();
+
 
         maData maDatas = gf.LireFichier(getContext(), "monJson.json");
 
@@ -61,7 +66,12 @@ public class MesEspacesFragment extends Fragment {
         }
         final maData finalDatas = maDatas;
 
-        ArrayAdapter<espace> adapter = new ArrayAdapter<espace>(getActivity(), android.R.layout.simple_list_item_1, maDatas.getMesEspaces()); //items
+        for (int i = 0; i < maDatas.getMesEspaces().size(); i++) {
+            nomEspace = maDatas.getMesEspaces().get(i).nomEsp();
+            list.add(nomEspace);
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list); //items maDatas.getMesEspaces()
         mListeView.setAdapter(adapter);
 
         monBouton.setOnClickListener(new View.OnClickListener() {
@@ -75,9 +85,9 @@ public class MesEspacesFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Vector<indicateur> i = new Vector<>();
                         espace esp = new espace(i, input.getText().toString(), finalDatas.getMesEspaces().size() + 1);
-
                         finalDatas.getMesEspaces().addElement(esp);
                         gf.ecrireFichier(finalDatas, getContext());
+                        list.add(esp.getNom());
 
                     }
                 });
@@ -88,6 +98,15 @@ public class MesEspacesFragment extends Fragment {
                     }
                 });
                 builder.show();
+            }
+        });
+
+        btnSuppEsp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDatas.getMesEspaces().remove(pos);
+                list.remove(pos);
+                gf.ecrireFichier(finalDatas, getContext());
             }
         });
 

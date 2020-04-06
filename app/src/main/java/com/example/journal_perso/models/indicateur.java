@@ -8,12 +8,16 @@ public class indicateur implements Serializable {
     private int TypeIndic;
     private int id;
     private String text;
+    private int Heure;
+    private int min;
 
-    public indicateur(String nom, int typeIndic, int id, String text) {
+    public indicateur(String nom, int typeIndic, int id, String text, int Heure, int min) {
         this.nom = nom;
         TypeIndic = typeIndic;
         this.id = id;
         this.text = text;
+        this.Heure = Heure;
+        this.min = min;
     }
 
     public int getTypeIndic() {
@@ -48,6 +52,23 @@ public class indicateur implements Serializable {
         this.text = text;
     }
 
+    public int getHeure() {
+        return Heure;
+    }
+
+    public void setHeure(int heure) {
+        Heure = heure;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+
     @Override
     public String toString() {
         return "indicateur{" +
@@ -55,6 +76,8 @@ public class indicateur implements Serializable {
                 ", TypeIndic=" + TypeIndic +
                 ", id=" + id +
                 ", text='" + text + '\'' +
+                ", Heure='" + Heure + '\'' +
+                ", min='" + min + '\'' +
                 '}';
     }
 }

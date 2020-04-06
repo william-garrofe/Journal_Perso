@@ -1,5 +1,6 @@
 package com.example.journal_perso;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,14 +28,17 @@ import java.util.Vector;
 public class ConfigurationIndicateur extends AppCompatActivity  implements AdapterView.OnItemSelectedListener{
 
     private EditText monIndicateurNom;
-    private Switch monSwitchCreneau;
+    private Switch monSwitchCreneau = null;
     private EditText monTempsCreneau;
     private Button monButton;
     private Spinner monSpinner;
     private espace esp;
     private maData data;
     private LinearLayout ll;
-    private int pos;
+    private int pos = -1;
+    private EditText et, et1;
+    private int mHour, mMinute;
+    private LinearLayout.LayoutParams p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monSpinner = findViewById(R.id.typeIndicateur);
         ll = findViewById(R.id.maLayout);
 
+
         Intent i = getIntent();
         esp = (espace) i.getSerializableExtra("espace");
         data = (maData) i.getSerializableExtra("maData");
@@ -56,40 +63,68 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monAdaptater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monSpinner.setAdapter(monAdaptater);
         monSpinner.setOnItemSelectedListener(this);
+        p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
+        monSwitchCreneau.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Launch Time Picker Dialog
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(ConfigurationIndicateur.this,
+                            new TimePickerDialog.OnTimeSetListener() {
+
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay,
+                                                      int minute) {
+                                    et1 = new EditText(getApplicationContext());
+                                    et1.setLayoutParams(p);
+                                    et1.setText("Heure : " + hourOfDay + " min : " + minute);
+                                    mHour = hourOfDay;
+                                    mMinute = minute;
+                                    ll.addView(et1);
+                                }
+                            }, 0, 0, true);
+                    timePickerDialog.show();
+                } else {
+                    ll.removeView(et1);
+                }
+            }
+        });
         monButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                indicateur i = new indicateur(monIndicateurNom.getText().toString(), pos, esp.getcIndic().size() + 1, "");
+                indicateur i = new indicateur(monIndicateurNom.getText().toString(), pos, esp.getcIndic().size() + 1, et.getText().toString(), mHour, mMinute);
                 esp.getcIndic().addElement(i);
                 data = UpdateData(data, esp);
                 gf.ecrireFichier(data, getApplicationContext());
             }
         });
+
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String monText = parent.getItemAtPosition(position).toString();
         pos = position;
+        ll.removeAllViews();
+
         switch (position)
         {
             case 0:
-                EditText et = new EditText(getApplicationContext());
-                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                et = new EditText(getApplicationContext());
                 et.setLayoutParams(p);
-                et.setHint("texte");
+                et.setHint("Texte");
                 ll.addView(et);
                 break;
 
             case 1:
                 CheckBox cb = new CheckBox(getApplicationContext());
-                LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                cb.setLayoutParams(l);
-                cb.setText(monIndicateurNom.getText());
+                cb.setLayoutParams(p);
+                cb.setText(monIndicateurNom.getText().toString());
                 ll.addView(cb);
                 break;
         }
+        monSwitchCreneau.setVisibility(view.VISIBLE);
     }
 
     @Override
@@ -108,6 +143,4 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         }
         return data;
     }
-
-
 }
