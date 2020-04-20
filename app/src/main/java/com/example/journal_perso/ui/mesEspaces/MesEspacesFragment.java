@@ -42,6 +42,7 @@ public class MesEspacesFragment extends Fragment {
     final private gsonFic gf = new gsonFic();
     private int pos = -1;
     private String nomEspace;
+    private ArrayList<Integer> ListJour;
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,12 +52,15 @@ public class MesEspacesFragment extends Fragment {
         Button monBouton = root.findViewById(R.id.btnCreerEspace);
         Button modifBouton = root.findViewById(R.id.btnModifierEspace);
         Button btnSuppEsp = root.findViewById(R.id.btnSuppEspace);
+        Button btnJours = root.findViewById(R.id.btnJours);
+
         builder = new AlertDialog.Builder(getActivity());
 
         mScrollView = root.findViewById(R.id.scrollView2);
         mListeView = root.findViewById(R.id.list);
         final ArrayList<String> list = new ArrayList<>();
 
+        ListJour = new ArrayList<>();
 
         maData maDatas = gf.LireFichier(getContext(), "monJson.json");
 
@@ -84,11 +88,10 @@ public class MesEspacesFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Vector<indicateur> i = new Vector<>();
-                        espace esp = new espace(i, input.getText().toString(), finalDatas.getMesEspaces().size() + 1);
+                        espace esp = new espace(i, input.getText().toString(), finalDatas.getMesEspaces().size() + 1, ListJour); //A faire
                         finalDatas.getMesEspaces().addElement(esp);
                         gf.ecrireFichier(finalDatas, getContext());
                         list.add(esp.getNom());
-
                     }
                 });
                 builder.setNegativeButton("Retour", new DialogInterface.OnClickListener() {
@@ -98,6 +101,43 @@ public class MesEspacesFragment extends Fragment {
                     }
                 });
                 builder.show();
+            }
+        });
+
+        btnJours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builderJours = new AlertDialog.Builder(getActivity());
+                final ArrayList joursSelect = new ArrayList();
+                builderJours.setTitle("Choisir les jours pour l'espace : ");
+                String[] animals = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                ArrayList<Boolean> patate = new ArrayList<>();
+
+                builderJours.setMultiChoiceItems(animals, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int jour, boolean isChecked) {
+                        // The user checked or unchecked a box
+                        if (isChecked) {
+                            joursSelect.add(jour);
+                        } else if (joursSelect.contains(jour)) {
+                            joursSelect.remove(Integer.valueOf(jour));
+                        }
+                    }
+                });
+
+                builderJours.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The user clicked OK
+                        finalDatas.getMesEspaces().get(pos).setListJour(joursSelect);
+                        gf.ecrireFichier(finalDatas, getContext());
+                    }
+                });
+                builderJours.setNegativeButton("Retour", null);
+
+// Create and show the alert dialog
+                AlertDialog dialog = builderJours.create();
+                dialog.show();
             }
         });
 

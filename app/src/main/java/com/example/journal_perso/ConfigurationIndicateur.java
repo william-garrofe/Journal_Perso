@@ -37,8 +37,8 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
     private LinearLayout ll;
     private int pos = -1;
     private EditText et, et1;
-    private int mHour, mMinute;
     private LinearLayout.LayoutParams p;
+    private String mTemps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,6 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // Launch Time Picker Dialog
                     TimePickerDialog timePickerDialog = new TimePickerDialog(ConfigurationIndicateur.this,
                             new TimePickerDialog.OnTimeSetListener() {
 
@@ -79,8 +78,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
                                     et1 = new EditText(getApplicationContext());
                                     et1.setLayoutParams(p);
                                     et1.setText("Heure : " + hourOfDay + " min : " + minute);
-                                    mHour = hourOfDay;
-                                    mMinute = minute;
+                                    mTemps = hourOfDay + ":" + minute;
                                     ll.addView(et1);
                                 }
                             }, 0, 0, true);
@@ -93,10 +91,15 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                indicateur i = new indicateur(monIndicateurNom.getText().toString(), pos, esp.getcIndic().size() + 1, et.getText().toString(), mHour, mMinute);
+                indicateur i = new indicateur(monIndicateurNom.getText().toString(), pos, esp.getcIndic().size() + 1, et.getText().toString(), mTemps);
                 esp.getcIndic().addElement(i);
                 data = UpdateData(data, esp);
                 gf.ecrireFichier(data, getApplicationContext());
+
+                Intent intent = new Intent(ConfigurationIndicateur.this, monEspace.class);
+                intent.putExtra("espace", esp);
+                intent.putExtra("maData", data);
+                startActivity(intent);
             }
         });
 

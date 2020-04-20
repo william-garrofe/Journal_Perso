@@ -18,7 +18,7 @@
     <string name="tIndic">Type indicateur :</string>
 
     <string-array name="typeIndicateurNom">
-        <item>1- CheckBox</item>
-        <item>2- TextEdit</item>
+        <item>TextEdit</item>
+        <item>CheckBox</item>
     </string-array>
 </resources>

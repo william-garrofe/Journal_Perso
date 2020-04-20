@@ -3,12 +3,15 @@ package com.example.journal_perso;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.journal_perso.models.espace;
 import com.example.journal_perso.models.maData;
@@ -22,26 +25,63 @@ public class monEspace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mon_espace);
 
+        ImageButton imageRetour = findViewById(R.id.imageRetour);
+
         Intent i = getIntent();
 
         final maData data = (maData) i.getSerializableExtra("maData");
         final espace esp = (espace) i.getSerializableExtra("espace");
 
         LinearLayout lay = findViewById(R.id.LayoutMonEsp);
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        //TODO : List indicateur
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
         for (int j = 0; j < esp.getcIndic().size(); j++) {
             int type = esp.getcIndic().get(j).getTypeIndic();
             String nom = esp.getcIndic().get(j).getNom();
+            String txt = esp.getcIndic().get(j).getText();
+            String temps = esp.getcIndic().get(j).getTemps();
+            CardView cardView = new CardView(getApplicationContext());
+            cardView.setLayoutParams(p);
+
             switch (type) {
-                case 1:
-                    EditText text = new EditText(getApplicationContext());
+                case 0:
+
+
+                    TextView text = new TextView(getApplicationContext());
                     text.setLayoutParams(p);
-                    text.setHint("texte");
-                    lay.addView(text);
+                    text.setText(txt);
+
+                    TextView textView = new TextView(getApplicationContext());
+                    textView.setLayoutParams(p);
+                    textView.setText(temps);
+
+                    LinearLayout ll2 = new LinearLayout(getApplicationContext());
+                    ll2.setOrientation(LinearLayout.VERTICAL);
+                    ll2.addView(text);
+                    ll2.addView(textView);
+
+                    cardView.addView(ll2);
+                    lay.addView(cardView);
+                    break;
+
+                case 1:
+                    CheckBox cb = new CheckBox(getApplicationContext());
+                    cb.setText(nom);
+                    lay.addView(cb);
                     break;
             }
         }
+
+        imageRetour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new Fragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_mes_esapces, fragment);
+                transaction.commit();
+            }
+        });
 
         monTView = findViewById(R.id.textView5);
         monTView.setText(esp.getNom());
