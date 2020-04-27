@@ -110,7 +110,7 @@ public class MesEspacesFragment extends Fragment {
                 AlertDialog.Builder builderJours = new AlertDialog.Builder(getActivity());
                 final ArrayList joursSelect = new ArrayList();
                 builderJours.setTitle("Choisir les jours pour l'espace : ");
-                String[] animals = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
+                String[] animals = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
                 ArrayList<Boolean> patate = new ArrayList<>();
 
                 builderJours.setMultiChoiceItems(animals, null, new DialogInterface.OnMultiChoiceClickListener() {
@@ -118,9 +118,9 @@ public class MesEspacesFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int jour, boolean isChecked) {
                         // The user checked or unchecked a box
                         if (isChecked) {
-                            joursSelect.add(jour);
-                        } else if (joursSelect.contains(jour)) {
-                            joursSelect.remove(Integer.valueOf(jour));
+                            joursSelect.add(jour + 1);
+                        } else if (joursSelect.contains(jour + 1)) {
+                            joursSelect.remove(Integer.valueOf(jour + 1));
                         }
                     }
                 });
@@ -128,14 +128,12 @@ public class MesEspacesFragment extends Fragment {
                 builderJours.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // The user clicked OK
+
                         finalDatas.getMesEspaces().get(pos).setListJour(joursSelect);
                         gf.ecrireFichier(finalDatas, getContext());
                     }
                 });
                 builderJours.setNegativeButton("Retour", null);
-
-// Create and show the alert dialog
                 AlertDialog dialog = builderJours.create();
                 dialog.show();
             }
