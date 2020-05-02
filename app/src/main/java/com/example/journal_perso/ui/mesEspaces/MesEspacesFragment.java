@@ -25,7 +25,7 @@ import com.example.journal_perso.R;
 import com.example.journal_perso.models.espace;
 import com.example.journal_perso.models.gsonFic;
 import com.example.journal_perso.models.indicateur;
-import com.example.journal_perso.models.maData;
+import com.example.journal_perso.models.structData;
 import com.example.journal_perso.monEspace;
 
 import java.util.ArrayList;
@@ -62,20 +62,20 @@ public class MesEspacesFragment extends Fragment {
 
         ListJour = new ArrayList<>();
 
-        maData maDatas = gf.LireFichier(getContext(), "monJson.json");
+        structData maDatas = (structData) gf.LireFichier(getContext(), "monJson.json");
 
         if (maDatas == null) {
-            maDatas = new maData();
+            maDatas = new structData();
             maDatas.setMesEspaces(new Vector<espace>());
         }
-        final maData finalDatas = maDatas;
+        final structData finalDatas = maDatas;
 
         for (int i = 0; i < maDatas.getMesEspaces().size(); i++) {
             nomEspace = maDatas.getMesEspaces().get(i).nomEsp();
             list.add(nomEspace);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list); //items maDatas.getMesEspaces()
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list); //items maDatas.getMesEspaces()
         mListeView.setAdapter(adapter);
 
         monBouton.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class MesEspacesFragment extends Fragment {
                         Vector<indicateur> i = new Vector<>();
                         espace esp = new espace(i, input.getText().toString(), finalDatas.getMesEspaces().size() + 1, ListJour); //A faire
                         finalDatas.getMesEspaces().addElement(esp);
-                        gf.ecrireFichier(finalDatas, getContext());
+                        gf.ecrireFichier(finalDatas, getContext(), "monJson.json");
                         list.add(esp.getNom());
                     }
                 });
@@ -111,12 +111,10 @@ public class MesEspacesFragment extends Fragment {
                 final ArrayList joursSelect = new ArrayList();
                 builderJours.setTitle("Choisir les jours pour l'espace : ");
                 String[] animals = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
-                ArrayList<Boolean> patate = new ArrayList<>();
-
+                final structData data = (structData) gf.LireFichier(getContext(), "monJson.json");
                 builderJours.setMultiChoiceItems(animals, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int jour, boolean isChecked) {
-                        // The user checked or unchecked a box
                         if (isChecked) {
                             joursSelect.add(jour + 1);
                         } else if (joursSelect.contains(jour + 1)) {
@@ -128,23 +126,26 @@ public class MesEspacesFragment extends Fragment {
                 builderJours.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        finalDatas.getMesEspaces().get(pos).setListJour(joursSelect);
-                        gf.ecrireFichier(finalDatas, getContext());
+                        data.getMesEspaces().get(pos).setListJour(joursSelect);
+                        gf.ecrireFichier(data, getContext(), "monJson.json");
                     }
                 });
                 builderJours.setNegativeButton("Retour", null);
                 AlertDialog dialog = builderJours.create();
                 dialog.show();
             }
+
         });
 
         btnSuppEsp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finalDatas.getMesEspaces().remove(pos);
-                list.remove(pos);
-                gf.ecrireFichier(finalDatas, getContext());
+                if (pos != -1) {
+                    finalDatas.getMesEspaces().remove(pos);
+                    list.remove(pos);
+                    adapter.notifyDataSetChanged();
+                    gf.ecrireFichier(finalDatas, getContext(), "monJson.json");
+                }
             }
         });
 

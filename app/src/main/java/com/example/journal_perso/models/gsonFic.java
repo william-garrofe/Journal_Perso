@@ -18,6 +18,7 @@ public class gsonFic {
     private Context monContext;
     private Activity monActivity;
     private String filename = "monJson.json";
+    private java.lang.Object Object;
 
     public gsonFic() {
     }
@@ -75,17 +76,23 @@ public class gsonFic {
 
     //endregion
 
-    public void ecrireFichier(maData maDatas, Context monContext)
+    public void ecrireFichier(Object obj, Context monContext, String FILENAME) //public void ecrireFichier(maData maDatas, Context monContext)
     {
         final GsonBuilder builder = new GsonBuilder().serializeNulls().disableHtmlEscaping().setPrettyPrinting();
         final Gson gson = builder.create();
-
-        String fileContents = gson.toJson(maDatas);  //Ne pas oublier
         FileOutputStream monFichier;
+        String fileContents = null;
 
+        if (obj instanceof structData) {
+            structData maDatas = (structData) obj;
+            fileContents = gson.toJson(maDatas);  //Ne pas oublier
+        } else if (obj instanceof dateData) {
+            dateData maDataLoc = (dateData) obj;
+            fileContents = gson.toJson(maDataLoc);
+        }
         try
         {
-            monFichier = monContext.openFileOutput(filename, Context.MODE_PRIVATE);
+            monFichier = monContext.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             monFichier.write(fileContents.getBytes());
             monFichier.close();
         } catch (FileNotFoundException e) {
@@ -93,10 +100,12 @@ public class gsonFic {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    public maData LireFichier(Context context, String FILENAME) {
-        maData mData;
+    public Object LireFichier(Context context, String FILENAME) {
+        Object obj = null;
+
         final Gson gson = new GsonBuilder()
                 .serializeNulls()
                 .disableHtmlEscaping()
@@ -112,8 +121,12 @@ public class gsonFic {
                 resultFromJson += (char) content;
             }
             inputStream.close();
-            mData = gson.fromJson(resultFromJson, maData.class);
-            return mData;
+            if (FILENAME.equals("monJson.json")) {
+                obj = gson.fromJson(resultFromJson, structData.class);
+            } else if (FILENAME.equals("dataJson.json")) {
+                obj = gson.fromJson(resultFromJson, dateData.class);
+            }
+            return obj;
         } catch (Exception e) {
             return null;
         }

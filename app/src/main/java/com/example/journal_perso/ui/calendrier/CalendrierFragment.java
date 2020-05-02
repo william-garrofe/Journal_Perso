@@ -18,7 +18,7 @@ import com.example.journal_perso.DataEspace;
 import com.example.journal_perso.R;
 import com.example.journal_perso.models.espace;
 import com.example.journal_perso.models.gsonFic;
-import com.example.journal_perso.models.maData;
+import com.example.journal_perso.models.structData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +30,7 @@ public class CalendrierFragment extends Fragment {
     private espace mesEsp;
     final private gsonFic gf = new gsonFic();
     private ListView listCal;
+    private Vector<espace> sData;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,24 +40,18 @@ public class CalendrierFragment extends Fragment {
 
         final CalendarView cal = root.findViewById(R.id.calendarView);
         //listCal = root.findViewById(R.id.listCalendrier);
+        sData = new Vector<espace>();
 
         final ArrayList<String> list = new ArrayList<>();
         final LinearLayout ll = root.findViewById(R.id.maLayoutCalendrier);
 
-        maData maDatas = gf.LireFichier(getContext(), "monJson.json");
-        final maData finalData = maDatas;
+        structData maDatas = (structData) gf.LireFichier(getContext(), "monJson.json");
+        final structData finalData = maDatas;
 
         if (maDatas == null) {
-            maDatas = new maData();
+            maDatas = new structData();
             maDatas.setMesEspaces(new Vector<espace>());
         }
-
-        /*for (int i = 0; i < maDatas.getMesEspaces().size(); i++) {
-            nomEspace = maDatas.getMesEspaces().get(i).nomEsp();
-            list.add(nomEspace);
-        }*/
-
-        long test = cal.getDate();
 
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -69,17 +64,20 @@ public class CalendrierFragment extends Fragment {
                 for (int i = 0; i < finalData.getMesEspaces().size(); i++) {
                     if (finalData.getMesEspaces().get(i).getListJour().contains(dayOfWeek)) {
                         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        Button nB = new Button(getContext());
+                        final Button nB = new Button(getContext());
                         nB.setLayoutParams(p);
-                        nB.setId(i + 1);
+                        nB.setId(i);
                         nB.setText(finalData.getMesEspaces().get(i).getNom());
-                        final int index = i;
+                        //e.addElement(finalData.getMesEspaces().get(i));
+                        //sData.addElement(finalData.getMesEspaces().get(i));
+                        final int indew = i;
                         nB.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(getActivity(), DataEspace.class);
-                                intent.putExtra("espace", finalData.getMesEspaces().get(index));
-                                //intent.putExtra("maData", finalData);
+                                intent.putExtra("espace", finalData.getMesEspaces().get(indew));
+//                                System.out.println(sData.get(nB.getId()));
+                                System.out.println(finalData.getMesEspaces().get(indew));
                                 intent.putExtra("date", date);
                                 startActivity(intent);
                             }

@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.journal_perso.models.espace;
-import com.example.journal_perso.models.maData;
+import com.example.journal_perso.models.structData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class monEspace extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class monEspace extends AppCompatActivity {
 
         Intent i = getIntent();
 
-        final maData data = (maData) i.getSerializableExtra("maData");
+        final structData data = (structData) i.getSerializableExtra("maData");
         final espace esp = (espace) i.getSerializableExtra("espace");
 
         LinearLayout lay = findViewById(R.id.LayoutMonEsp);

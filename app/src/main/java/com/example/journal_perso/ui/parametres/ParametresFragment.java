@@ -21,6 +21,7 @@ public class ParametresFragment extends Fragment {
                 ViewModelProviders.of(this).get(ParametresViewModel.class);
         View root = inflater.inflate(R.layout.fragment_parametres, container, false);
 
+
         return root;
     }
 }

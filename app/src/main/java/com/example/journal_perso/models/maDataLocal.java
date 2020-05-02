@@ -9,12 +9,15 @@ public class maDataLocal implements Serializable {
     private String date;
     private Vector<espace> mesEspaces;
 
-    //region getter
+    public maDataLocal() {
+    }
+
     public maDataLocal(String date, Vector<espace> mesEspaces) {
         this.date = date;
         this.mesEspaces = mesEspaces;
     }
 
+    //region getter
     public String getDate() {
         return date;
     }

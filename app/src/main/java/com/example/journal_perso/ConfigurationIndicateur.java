@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.journal_perso.models.espace;
 import com.example.journal_perso.models.gsonFic;
 import com.example.journal_perso.models.indicateur;
-import com.example.journal_perso.models.maData;
+import com.example.journal_perso.models.structData;
 
 import java.util.Vector;
 
@@ -33,7 +33,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
     private Button monButton;
     private Spinner monSpinner;
     private espace esp;
-    private maData data;
+    private structData data;
     private LinearLayout ll;
     private int pos = -1;
     private EditText et, et1;
@@ -55,7 +55,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
 
         Intent i = getIntent();
         esp = (espace) i.getSerializableExtra("espace");
-        data = (maData) i.getSerializableExtra("maData");
+        data = (structData) i.getSerializableExtra("maData");
         final gsonFic gf = new gsonFic();
 
 
@@ -94,7 +94,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
                 indicateur i = new indicateur(monIndicateurNom.getText().toString(), pos, esp.getcIndic().size() + 1, et.getText().toString(), mTemps);
                 esp.getcIndic().addElement(i);
                 data = UpdateData(data, esp);
-                gf.ecrireFichier(data, getApplicationContext());
+                gf.ecrireFichier(data, getApplicationContext(), "monJson.json");
 
                 Intent intent = new Intent(ConfigurationIndicateur.this, monEspace.class);
                 intent.putExtra("espace", esp);
@@ -136,7 +136,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monSwitchCreneau.setVisibility(View.INVISIBLE);
     }
 
-    private maData UpdateData(maData data, espace espace) {
+    private structData UpdateData(structData data, espace espace) {
         Vector<espace> vect = data.getMesEspaces();
         for (int i = 0; i < vect.size(); i++) {
             if (vect.get(i).getId() == espace.getId()) {

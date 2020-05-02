@@ -3,14 +3,14 @@ package com.example.journal_perso.models;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class maData implements Serializable {
+public class structData implements Serializable {
 
     private Vector<espace> mesEspaces;
 
-    public maData() {
+    public structData() {
     }
 
-    public maData(Vector<espace> mesEspaces) {
+    public structData(Vector<espace> mesEspaces) {
         this.mesEspaces = mesEspaces;
     }
 
