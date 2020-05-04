@@ -2,9 +2,12 @@ package com.example.journal_perso;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -23,7 +26,6 @@ public class DataEspace extends AppCompatActivity {
     private LinearLayout.LayoutParams p;
     private dateData data;
     private maDataLocal s;
-    //private espace e;
     private LinearLayout ll;
 
     @Override
@@ -38,34 +40,24 @@ public class DataEspace extends AppCompatActivity {
         //s = new maDataLocal();
 
 
-        final espace esp = (espace) i.getSerializableExtra("espace");
+        final espace mEspace = (espace) i.getSerializableExtra("espace");
         final String date = (String) i.getSerializableExtra("date");
 
         ll = findViewById(R.id.maLayoutData);
         data = (dateData) gf.LireFichier(getApplicationContext(), "dataJson.json");
-        //Vector<maDataLocal> test = new Vector<>();
-        System.out.println(date);
-        p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        EditText et1 = new EditText(getApplicationContext());
-        et1.setLayoutParams(p);
-        et1.setText(esp.getNom());
-        ll.addView(et1);
 
-        test(date, esp);
-
-        //TODO : Show esp function
+        data = test(date, mEspace, data);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //finalDataLoc.setDateData();
                 gf.ecrireFichier(data, getApplicationContext(), "dataJson.json");
             }
         });
     }
 
-    public void test(String date, espace e) {
-        espace d = null;
+    public dateData test(String date, espace esp, dateData data) {
+        dateData d = data;
         boolean espace_NT = true; //NT = non trouvé
         boolean addDate = true; //Date non présente dans le json
         int index = 0;
@@ -73,26 +65,18 @@ public class DataEspace extends AppCompatActivity {
         Vector<maDataLocal> mDataLoc = new Vector<>();
         maDataLocal m;
 
-        if (data != null) {
-            //TODO : function for search espace in data from json
-            //TODO : esp = espace found
-            for (int j = 0; j < data.getDateData().size(); j++) {
-                if (data.getDateData().get(j).getDate().contains(date)) {
+        if (d != null) {
+            for (int j = 0; j < d.getDateData().size(); j++) {
+                if (d.getDateData().get(j).getDate().contains(date)) {
                     addDate = false;
-                    s = data.getDateData().get(j);
+                    s = d.getDateData().get(j);
                     index = j;
                     for (int k = 0; k < s.getMesEspaces().size(); k++) {
-                        if (s.getMesEspaces().get(k).getNom().contains(e.getNom())) {
+                        if (s.getMesEspaces().get(k).getNom().contains(esp.getNom())) {
                             espace_NT = false;
-                            e = s.getMesEspaces().get(k);
-                            for (int l = 0; l < e.getcIndic().size(); l++) {
-                                System.out.println(s);
-                                p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                EditText et1 = new EditText(getApplicationContext());
-                                et1.setLayoutParams(p);
-                                et1.setText(e.getcIndic().get(l).getText());
-                                ll.addView(et1);
-                            }
+                            esp = affichageEsp(s.getMesEspaces().get(k), d);
+                            s.getMesEspaces().set(k, esp);
+                            d.getDateData().set(index, s);
                         }
                     }
                 }
@@ -100,39 +84,59 @@ public class DataEspace extends AppCompatActivity {
 
 
             if (addDate == true) {
-                n.add(e);
+                n.add(esp);
                 m = new maDataLocal(date, n);
-//                /mDataLoc.addElement(m);
-                data.getDateData().add(m);
+                d.getDateData().add(m);
             } else if (espace_NT == true) {
-                data.getDateData().get(index).getMesEspaces().addElement(e);
+                d.getDateData().get(index).getMesEspaces().addElement(esp);
             }
-
-            /* data.setDateData(test);
-             //data.getDateData().addElement(test.firstElement());
-
-             Vector<espace> n = new Vector<espace>();
-             n.add(esp);
-             e =new maDataLocal(date, n);
-
-             //n.add(esp2);
-             e.setMesEspaces(n);
-
-             e = new maDataLocal("Date", new Vector<espace>());
-             e.getMesEspaces().add(esp);
-
-             test.add(e);
-             //data.setDateData();
-
-             data.setDateData(new Vector<maDataLocal>());
-             data.getDateData().add(e);*/
         } else {
-            data = new dateData();
-            n.add(e);
+            d = new dateData();
+            n.add(esp);
             m = new maDataLocal(date, n);
             mDataLoc.addElement(m);
-            data.setDateData(mDataLoc);
+            d.setDateData(mDataLoc);
         }
-        // return d;
+        return d;
+    }
+
+    public espace affichageEsp(final espace mEsp, dateData dataEsp) {
+
+        p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        for (int l = 0; l < mEsp.getcIndic().size(); l++) {
+            final int paatate = l;
+            switch (mEsp.getcIndic().get(l).getTypeIndic()) {
+                case 0:
+                    final EditText et = new EditText(getApplicationContext());
+                    et.setLayoutParams(p);
+                    et.setText(mEsp.getcIndic().get(l).getText());
+                    et.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            mEsp.getcIndic().get(paatate).setText(et.getText().toString());
+                        }
+                    });
+                    ll.addView(et);
+                    break;
+                case 1:
+                    CheckBox cb = new CheckBox(getApplicationContext());
+                    cb.setLayoutParams(p);
+                    cb.setText(mEsp.getcIndic().get(l).getNom());
+                    ll.addView(cb);
+                    break;
+            }
+
+        }
+        return mEsp;
     }
 }
