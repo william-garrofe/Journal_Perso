@@ -3,22 +3,22 @@ package com.example.journal_perso.models;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class structData implements Serializable {
+public class StructData implements Serializable {
 
-    private Vector<espace> mesEspaces;
+    private Vector<Espace> mesEspaces;
 
-    public structData() {
+    public StructData() {
     }
 
-    public structData(Vector<espace> mesEspaces) {
+    public StructData(Vector<Espace> mesEspaces) {
         this.mesEspaces = mesEspaces;
     }
 
-    public Vector<espace> getMesEspaces() {
+    public Vector<Espace> getMesEspaces() {
         return mesEspaces;
     }
 
-    public void setMesEspaces(Vector<espace> mesEspaces) {
+    public void setMesEspaces(Vector<Espace> mesEspaces) {
         this.mesEspaces = mesEspaces;
     }
 

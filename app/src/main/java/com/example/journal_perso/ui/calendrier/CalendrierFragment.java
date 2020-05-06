@@ -16,9 +16,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.journal_perso.DataEspace;
 import com.example.journal_perso.R;
-import com.example.journal_perso.models.espace;
-import com.example.journal_perso.models.gsonFic;
-import com.example.journal_perso.models.structData;
+import com.example.journal_perso.models.Espace;
+import com.example.journal_perso.models.GsonFic;
+import com.example.journal_perso.models.StructData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,10 +27,9 @@ import java.util.Vector;
 public class CalendrierFragment extends Fragment {
 
     private CalendrierViewModel calendrierViewModel;
-    private espace mesEsp;
-    final private gsonFic gf = new gsonFic();
+    final private GsonFic gf = new GsonFic();
+    private Espace mesEsp;
     private ListView listCal;
-    private Vector<espace> sData;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,18 +38,16 @@ public class CalendrierFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_calendrier, container, false);
 
         final CalendarView cal = root.findViewById(R.id.calendarView);
-        //listCal = root.findViewById(R.id.listCalendrier);
-        sData = new Vector<espace>();
 
         final ArrayList<String> list = new ArrayList<>();
         final LinearLayout ll = root.findViewById(R.id.maLayoutCalendrier);
 
-        structData maDatas = (structData) gf.LireFichier(getContext(), "monJson.json");
-        final structData finalData = maDatas;
+        StructData maDatas = (StructData) gf.LireFichier(getContext(), "monJson.json");
+        final StructData finalData = maDatas;
 
         if (maDatas == null) {
-            maDatas = new structData();
-            maDatas.setMesEspaces(new Vector<espace>());
+            maDatas = new StructData();
+            maDatas.setMesEspaces(new Vector<Espace>());
         }
 
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

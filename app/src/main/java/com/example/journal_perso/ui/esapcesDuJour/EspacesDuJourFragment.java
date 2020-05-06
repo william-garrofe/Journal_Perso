@@ -14,9 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.journal_perso.R;
-import com.example.journal_perso.models.espace;
-import com.example.journal_perso.models.gsonFic;
-import com.example.journal_perso.models.structData;
+import com.example.journal_perso.models.Espace;
+import com.example.journal_perso.models.GsonFic;
+import com.example.journal_perso.models.StructData;
 import com.example.journal_perso.monEspace;
 
 import java.util.Calendar;
@@ -25,7 +25,7 @@ import java.util.Vector;
 public class EspacesDuJourFragment extends Fragment {
 
     private EspaceDuJourViewModel espaceDuJourViewModel;
-    final private gsonFic gf = new gsonFic();
+    final private GsonFic gf = new GsonFic();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,8 +36,8 @@ public class EspacesDuJourFragment extends Fragment {
         TextView t = root.findViewById(R.id.textV_espJour);
         int annee, mois, jour;
 
-        structData maDatas = (structData) gf.LireFichier(getContext(), "monJson.json");
-        final structData finalData = maDatas;
+        StructData maDatas = (StructData) gf.LireFichier(getContext(), "monJson.json");
+        final StructData finalData = maDatas;
 
         if (maDatas != null) {
 
@@ -70,8 +70,8 @@ public class EspacesDuJourFragment extends Fragment {
                 }
             }
         } else {
-            maDatas = new structData();
-            maDatas.setMesEspaces(new Vector<espace>());
+            maDatas = new StructData();
+            maDatas.setMesEspaces(new Vector<Espace>());
         }
 
 

@@ -4,27 +4,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class espace implements Serializable {
-    private Vector<indicateur> cIndic;
+public class Espace implements Serializable {
+    private Vector<Indicateur> cIndic;
     private String nomEspace;
     private int id;
     private ArrayList<Integer> ListJour;
-    public  espace(){
+
+    public Espace() {
 
     }
 
-    public espace(Vector<indicateur> cIndic, String nom, int id, ArrayList<Integer> ListJour) {
+    public Espace(Vector<Indicateur> cIndic, String nom, int id, ArrayList<Integer> ListJour) {
         this.cIndic = cIndic;
         this.nomEspace = nom;
         this.id = id;
         this.ListJour = ListJour;
     }
 
-    public Vector<indicateur> getcIndic() {
+    public Vector<Indicateur> getcIndic() {
         return cIndic;
     }
 
-    public void setcIndic(Vector<indicateur> cIndic) {
+    public void setcIndic(Vector<Indicateur> cIndic) {
         this.cIndic = cIndic;
     }
 

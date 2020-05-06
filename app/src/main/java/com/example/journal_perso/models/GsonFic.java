@@ -13,23 +13,23 @@ import java.io.InputStream;
 import java.util.Objects;
 import java.util.Vector;
 
-public class gsonFic {
-    private Vector<espace> e;
+public class GsonFic {
+    private Vector<Espace> e;
     private Context monContext;
     private Activity monActivity;
     private String filename = "monJson.json";
     private java.lang.Object Object;
 
-    public gsonFic() {
+    public GsonFic() {
     }
 
     //region getter/setter
 
-    public Vector<espace> getE() {
+    public Vector<Espace> getE() {
         return e;
     }
 
-    public void setE(Vector<espace> e) {
+    public void setE(Vector<Espace> e) {
         this.e = e;
     }
 
@@ -53,7 +53,7 @@ public class gsonFic {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        gsonFic gsonFic = (gsonFic) o;
+        GsonFic gsonFic = (GsonFic) o;
         return Objects.equals(e, gsonFic.e) &&
                 Objects.equals(monContext, gsonFic.monContext) &&
                 Objects.equals(monActivity, gsonFic.monActivity) &&
@@ -83,11 +83,11 @@ public class gsonFic {
         FileOutputStream monFichier;
         String fileContents = null;
 
-        if (obj instanceof structData) {
-            structData maDatas = (structData) obj;
+        if (obj instanceof StructData) {
+            StructData maDatas = (StructData) obj;
             fileContents = gson.toJson(maDatas);  //Ne pas oublier
-        } else if (obj instanceof dateData) {
-            dateData maDataLoc = (dateData) obj;
+        } else if (obj instanceof ListMaDataLocal) {
+            ListMaDataLocal maDataLoc = (ListMaDataLocal) obj;
             fileContents = gson.toJson(maDataLoc);
         }
         try
@@ -122,9 +122,9 @@ public class gsonFic {
             }
             inputStream.close();
             if (FILENAME.equals("monJson.json")) {
-                obj = gson.fromJson(resultFromJson, structData.class);
+                obj = gson.fromJson(resultFromJson, StructData.class);
             } else if (FILENAME.equals("dataJson.json")) {
-                obj = gson.fromJson(resultFromJson, dateData.class);
+                obj = gson.fromJson(resultFromJson, ListMaDataLocal.class);
             }
             return obj;
         } catch (Exception e) {

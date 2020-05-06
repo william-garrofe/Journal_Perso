@@ -3,22 +3,22 @@ package com.example.journal_perso.models;
 import java.util.Objects;
 import java.util.Vector;
 
-public class dateData {
-    Vector<maDataLocal> data;
+public class ListMaDataLocal {
+    Vector<MaDataLocal> data;
 
-    public dateData() {
+    public ListMaDataLocal() {
     }
 
-    public dateData(Vector<maDataLocal> dateData) {
+    public ListMaDataLocal(Vector<MaDataLocal> dateData) {
         this.data = dateData;
     }
 
     //region getter
-    public Vector<maDataLocal> getDateData() {
+    public Vector<MaDataLocal> getDateData() {
         return data;
     }
 
-    public void setDateData(Vector<maDataLocal> dateData) {
+    public void setDateData(Vector<MaDataLocal> dateData) {
         this.data = dateData;
     }
 
@@ -26,8 +26,8 @@ public class dateData {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        dateData dateData1 = (dateData) o;
-        return Objects.equals(data, dateData1.data);
+        ListMaDataLocal listMaDataLocal1 = (ListMaDataLocal) o;
+        return Objects.equals(data, listMaDataLocal1.data);
     }
 
     @Override

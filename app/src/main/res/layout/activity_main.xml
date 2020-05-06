@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtPasse" />
 
     <Button
-        android:id="@+id/btnInscription"
+        android:id="@+id/btnFenInscription"
         android:layout_width="125dp"
         android:layout_height="40dp"
         android:layout_marginStart="155dp"

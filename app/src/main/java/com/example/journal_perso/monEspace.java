@@ -13,12 +13,12 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.journal_perso.models.espace;
-import com.example.journal_perso.models.structData;
+import com.example.journal_perso.models.Espace;
+import com.example.journal_perso.models.StructData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class monEspace extends AppCompatActivity {
-    private espace esp = new espace();
+    private Espace esp = new Espace();
     private TextView monTView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class monEspace extends AppCompatActivity {
 
         Intent i = getIntent();
 
-        final structData data = (structData) i.getSerializableExtra("maData");
-        final espace esp = (espace) i.getSerializableExtra("espace");
+        final StructData data = (StructData) i.getSerializableExtra("maData");
+        final Espace esp = (Espace) i.getSerializableExtra("espace");
 
         LinearLayout lay = findViewById(R.id.LayoutMonEsp);
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

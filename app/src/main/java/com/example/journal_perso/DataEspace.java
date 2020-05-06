@@ -13,10 +13,10 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.journal_perso.models.dateData;
-import com.example.journal_perso.models.espace;
-import com.example.journal_perso.models.gsonFic;
-import com.example.journal_perso.models.maDataLocal;
+import com.example.journal_perso.models.Espace;
+import com.example.journal_perso.models.GsonFic;
+import com.example.journal_perso.models.ListMaDataLocal;
+import com.example.journal_perso.models.MaDataLocal;
 
 import java.util.Vector;
 
@@ -24,8 +24,8 @@ import java.util.Vector;
 public class DataEspace extends AppCompatActivity {
 
     private LinearLayout.LayoutParams p;
-    private dateData data;
-    private maDataLocal s;
+    private ListMaDataLocal data;
+    private MaDataLocal s;
     private LinearLayout ll;
 
     @Override
@@ -35,16 +35,16 @@ public class DataEspace extends AppCompatActivity {
 
         Button btnSave = findViewById(R.id.saveData);
 
-        final gsonFic gf = new gsonFic();
+        final GsonFic gf = new GsonFic();
         Intent i = getIntent();
         //s = new maDataLocal();
 
 
-        final espace mEspace = (espace) i.getSerializableExtra("espace");
+        final Espace mEspace = (Espace) i.getSerializableExtra("espace");
         final String date = (String) i.getSerializableExtra("date");
 
         ll = findViewById(R.id.maLayoutData);
-        data = (dateData) gf.LireFichier(getApplicationContext(), "dataJson.json");
+        data = (ListMaDataLocal) gf.LireFichier(getApplicationContext(), "dataJson.json");
 
         data = test(date, mEspace, data);
 
@@ -56,14 +56,14 @@ public class DataEspace extends AppCompatActivity {
         });
     }
 
-    public dateData test(String date, espace esp, dateData data) {
-        dateData d = data;
+    public ListMaDataLocal test(String date, Espace esp, ListMaDataLocal data) {
+        ListMaDataLocal d = data;
         boolean espace_NT = true; //NT = non trouvé
         boolean addDate = true; //Date non présente dans le json
         int index = 0;
-        Vector<espace> n = new Vector<espace>();
-        Vector<maDataLocal> mDataLoc = new Vector<>();
-        maDataLocal m;
+        Vector<Espace> n = new Vector<Espace>();
+        Vector<MaDataLocal> mDataLoc = new Vector<>();
+        MaDataLocal m;
 
         if (d != null) {
             for (int j = 0; j < d.getDateData().size(); j++) {
@@ -85,22 +85,22 @@ public class DataEspace extends AppCompatActivity {
 
             if (addDate == true) {
                 n.add(esp);
-                m = new maDataLocal(date, n);
+                m = new MaDataLocal(date, n);
                 d.getDateData().add(m);
             } else if (espace_NT == true) {
                 d.getDateData().get(index).getMesEspaces().addElement(esp);
             }
         } else {
-            d = new dateData();
+            d = new ListMaDataLocal();
             n.add(esp);
-            m = new maDataLocal(date, n);
+            m = new MaDataLocal(date, n);
             mDataLoc.addElement(m);
             d.setDateData(mDataLoc);
         }
         return d;
     }
 
-    public espace affichageEsp(final espace mEsp, dateData dataEsp) {
+    public Espace affichageEsp(final Espace mEsp, ListMaDataLocal dataEsp) {
 
         p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         for (int l = 0; l < mEsp.getcIndic().size(); l++) {

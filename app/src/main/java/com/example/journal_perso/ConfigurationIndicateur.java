@@ -18,10 +18,10 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.journal_perso.models.espace;
-import com.example.journal_perso.models.gsonFic;
-import com.example.journal_perso.models.indicateur;
-import com.example.journal_perso.models.structData;
+import com.example.journal_perso.models.Espace;
+import com.example.journal_perso.models.GsonFic;
+import com.example.journal_perso.models.Indicateur;
+import com.example.journal_perso.models.StructData;
 
 import java.util.Vector;
 
@@ -32,8 +32,8 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
     private EditText monTempsCreneau;
     private Button monButton;
     private Spinner monSpinner;
-    private espace esp;
-    private structData data;
+    private Espace esp;
+    private StructData data;
     private LinearLayout ll;
     private int pos = -1;
     private EditText et, et1;
@@ -54,9 +54,9 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
 
 
         Intent i = getIntent();
-        esp = (espace) i.getSerializableExtra("espace");
-        data = (structData) i.getSerializableExtra("maData");
-        final gsonFic gf = new gsonFic();
+        esp = (Espace) i.getSerializableExtra("espace");
+        data = (StructData) i.getSerializableExtra("maData");
+        final GsonFic gf = new GsonFic();
 
 
         ArrayAdapter<CharSequence> monAdaptater = ArrayAdapter.createFromResource(this, R.array.typeIndicateurNom,android.R.layout.simple_spinner_item);
@@ -91,7 +91,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                indicateur i = new indicateur(monIndicateurNom.getText().toString(), pos, esp.getcIndic().size() + 1, et.getText().toString(), mTemps);
+                Indicateur i = new Indicateur(monIndicateurNom.getText().toString(), pos, esp.getcIndic().size() + 1, et.getText().toString(), mTemps);
                 esp.getcIndic().addElement(i);
                 data = UpdateData(data, esp);
                 gf.ecrireFichier(data, getApplicationContext(), "monJson.json");
@@ -136,8 +136,8 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         monSwitchCreneau.setVisibility(View.INVISIBLE);
     }
 
-    private structData UpdateData(structData data, espace espace) {
-        Vector<espace> vect = data.getMesEspaces();
+    private StructData UpdateData(StructData data, Espace espace) {
+        Vector<Espace> vect = data.getMesEspaces();
         for (int i = 0; i < vect.size(); i++) {
             if (vect.get(i).getId() == espace.getId()) {
                 vect.get(i).setNom(espace.getNom());

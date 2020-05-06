@@ -2,7 +2,7 @@ package com.example.journal_perso.models;
 
 import java.io.Serializable;
 
-public class indicateur implements Serializable {
+public class Indicateur implements Serializable {
 
     private String nom;
     private int TypeIndic;
@@ -10,7 +10,7 @@ public class indicateur implements Serializable {
     private String text;
     private String temps;
 
-    public indicateur(String nom, int typeIndic, int id, String text, String temps) {
+    public Indicateur(String nom, int typeIndic, int id, String text, String temps) {
         this.nom = nom;
         TypeIndic = typeIndic;
         this.id = id;

@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Vector;
 
-public class maDataLocal implements Serializable {
+public class MaDataLocal implements Serializable {
 
     private String date;
-    private Vector<espace> mesEspaces;
+    private Vector<Espace> mesEspaces;
 
-    public maDataLocal() {
+    public MaDataLocal() {
     }
 
-    public maDataLocal(String date, Vector<espace> mesEspaces) {
+    public MaDataLocal(String date, Vector<Espace> mesEspaces) {
         this.date = date;
         this.mesEspaces = mesEspaces;
     }
@@ -26,11 +26,11 @@ public class maDataLocal implements Serializable {
         this.date = date;
     }
 
-    public Vector<espace> getMesEspaces() {
+    public Vector<Espace> getMesEspaces() {
         return mesEspaces;
     }
 
-    public void setMesEspaces(Vector<espace> mesEspaces) {
+    public void setMesEspaces(Vector<Espace> mesEspaces) {
         this.mesEspaces = mesEspaces;
     }
 
@@ -38,7 +38,7 @@ public class maDataLocal implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        maDataLocal that = (maDataLocal) o;
+        MaDataLocal that = (MaDataLocal) o;
         return Objects.equals(date, that.date) &&
                 Objects.equals(mesEspaces, that.mesEspaces);
     }

@@ -22,10 +22,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.journal_perso.R;
-import com.example.journal_perso.models.espace;
-import com.example.journal_perso.models.gsonFic;
-import com.example.journal_perso.models.indicateur;
-import com.example.journal_perso.models.structData;
+import com.example.journal_perso.models.Espace;
+import com.example.journal_perso.models.GsonFic;
+import com.example.journal_perso.models.Indicateur;
+import com.example.journal_perso.models.StructData;
 import com.example.journal_perso.monEspace;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class MesEspacesFragment extends Fragment {
     private ListView mListeView;
     private AlertDialog.Builder builder;
 
-    final private gsonFic gf = new gsonFic();
+    final private GsonFic gf = new GsonFic();
     private int pos = -1;
     private String nomEspace;
     private ArrayList<Integer> ListJour;
@@ -62,13 +62,13 @@ public class MesEspacesFragment extends Fragment {
 
         ListJour = new ArrayList<>();
 
-        structData maDatas = (structData) gf.LireFichier(getContext(), "monJson.json");
+        StructData maDatas = (StructData) gf.LireFichier(getContext(), "monJson.json");
 
         if (maDatas == null) {
-            maDatas = new structData();
-            maDatas.setMesEspaces(new Vector<espace>());
+            maDatas = new StructData();
+            maDatas.setMesEspaces(new Vector<Espace>());
         }
-        final structData finalDatas = maDatas;
+        final StructData finalDatas = maDatas;
 
         for (int i = 0; i < maDatas.getMesEspaces().size(); i++) {
             nomEspace = maDatas.getMesEspaces().get(i).nomEsp();
@@ -87,8 +87,8 @@ public class MesEspacesFragment extends Fragment {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Vector<indicateur> i = new Vector<>();
-                        espace esp = new espace(i, input.getText().toString(), finalDatas.getMesEspaces().size() + 1, ListJour); //A faire
+                        Vector<Indicateur> i = new Vector<>();
+                        Espace esp = new Espace(i, input.getText().toString(), finalDatas.getMesEspaces().size() + 1, ListJour); //A faire
                         finalDatas.getMesEspaces().addElement(esp);
                         gf.ecrireFichier(finalDatas, getContext(), "monJson.json");
                         list.add(esp.getNom());
@@ -111,7 +111,7 @@ public class MesEspacesFragment extends Fragment {
                 final ArrayList joursSelect = new ArrayList();
                 builderJours.setTitle("Choisir les jours pour l'espace : ");
                 String[] animals = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
-                final structData data = (structData) gf.LireFichier(getContext(), "monJson.json");
+                final StructData data = (StructData) gf.LireFichier(getContext(), "monJson.json");
                 builderJours.setMultiChoiceItems(animals, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int jour, boolean isChecked) {
