@@ -1,8 +1,9 @@
 package com.example.journal_perso.models;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class ListUser {
+public class ListUser implements Serializable {
     Vector<User> listUser;
 
     public ListUser(Vector<User> listUser) {

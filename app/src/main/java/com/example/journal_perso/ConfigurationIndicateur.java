@@ -3,6 +3,8 @@ package com.example.journal_perso;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -121,13 +123,28 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
                 break;
 
             case 1:
-                CheckBox cb = new CheckBox(getApplicationContext());
+                final CheckBox cb = new CheckBox(getApplicationContext());
                 cb.setLayoutParams(p);
-                cb.setText(monIndicateurNom.getText().toString());
+                monIndicateurNom.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        cb.setText(monIndicateurNom.getText().toString());
+                    }
+                });
                 ll.addView(cb);
                 break;
         }
-        monSwitchCreneau.setVisibility(view.VISIBLE);
+        //monSwitchCreneau.setVisibility(view.VISIBLE);
     }
 
     @Override

@@ -89,7 +89,11 @@ public class GsonFic {
         } else if (obj instanceof ListMaDataLocal) {
             ListMaDataLocal maDataLoc = (ListMaDataLocal) obj;
             fileContents = gson.toJson(maDataLoc);
+        } else if (obj instanceof User) {
+            User usr = (User) obj;
+            fileContents = gson.toJson(usr);
         }
+
         try
         {
             monFichier = monContext.openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -125,6 +129,8 @@ public class GsonFic {
                 obj = gson.fromJson(resultFromJson, StructData.class);
             } else if (FILENAME.equals("dataJson.json")) {
                 obj = gson.fromJson(resultFromJson, ListMaDataLocal.class);
+            } else if (FILENAME.equals("user.json")) {
+                obj = gson.fromJson(resultFromJson, User.class);
             }
             return obj;
         } catch (Exception e) {

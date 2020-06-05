@@ -20,32 +20,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edtPasse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="99dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtLogin" />
-
     <Button
         android:id="@+id/btnConnexion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="155dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="155dp"
         android:onClick="callBack"
         android:text="Connexion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPasse" />
+        app:layout_constraintTop_toBottomOf="@+id/editPasse" />
 
     <Button
         android:id="@+id/btnFenInscription"
@@ -71,5 +57,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editPasse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="99dp"
+        android:layout_marginBottom="45dp"
+        android:ems="10"
+        android:hint="Paswword"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btnConnexion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

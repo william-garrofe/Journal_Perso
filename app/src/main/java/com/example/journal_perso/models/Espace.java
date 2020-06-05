@@ -7,17 +7,17 @@ import java.util.Vector;
 public class Espace implements Serializable {
     private Vector<Indicateur> cIndic;
     private String nomEspace;
-    private int id;
+    private int idEspace;
     private ArrayList<Integer> ListJour;
 
     public Espace() {
 
     }
 
-    public Espace(Vector<Indicateur> cIndic, String nom, int id, ArrayList<Integer> ListJour) {
+    public Espace(Vector<Indicateur> cIndic, String nom, int idEspace, ArrayList<Integer> ListJour) {
         this.cIndic = cIndic;
         this.nomEspace = nom;
-        this.id = id;
+        this.idEspace = idEspace;
         this.ListJour = ListJour;
     }
 
@@ -38,11 +38,11 @@ public class Espace implements Serializable {
     }
 
     public int getId() {
-        return id;
+        return idEspace;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idEspace = id;
     }
 
     public String nomEsp() {
@@ -62,7 +62,7 @@ public class Espace implements Serializable {
         return "espace{" +
                 "cIndic=" + cIndic +
                 ", nomEspace='" + nomEspace + '\'' +
-                ", id=" + id +
+                ", id=" + idEspace +
                 ", ListJour=" + ListJour +
                 '}';
     }

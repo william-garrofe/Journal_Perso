@@ -82,6 +82,30 @@ public class UserService {
 
     }
 
+    public void update(String nom, String prenom, String email, String motdepasse, int idUser, Context context) throws JSONException, UnsupportedEncodingException {
+        String url = BASE_URL + "update.php";
+        JSONObject jsObj = new JSONObject();
+        jsObj.put("nom", nom);
+        jsObj.put("prenom", prenom);
+        jsObj.put("email", email);
+        jsObj.put("motdepasse", motdepasse);
+        jsObj.put("idUser", idUser);
+        StringEntity s = new StringEntity(jsObj.toString());
+
+        client.post(context, url, s, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = new String(responseBody);
+                //callback.onJSONResponse(true, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                System.out.println(error.getMessage());
+            }
+        });
+    }
+
     public void getUser(final OnJSONResponseCallback callback, String email, String motdepasse, Context context) throws JSONException, UnsupportedEncodingException {
 
         final String url = BASE_URL + "read_one.php";
@@ -116,6 +140,7 @@ public class UserService {
         });
 
     }
+
 
     public interface OnJSONResponseCallback {
         public void onJSONResponse(boolean success, Object object);

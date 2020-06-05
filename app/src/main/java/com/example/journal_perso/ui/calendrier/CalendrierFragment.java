@@ -67,14 +67,14 @@ public class CalendrierFragment extends Fragment {
                         nB.setText(finalData.getMesEspaces().get(i).getNom());
                         //e.addElement(finalData.getMesEspaces().get(i));
                         //sData.addElement(finalData.getMesEspaces().get(i));
-                        final int indew = i;
+                        final int index = i;
                         nB.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(getActivity(), DataEspace.class);
-                                intent.putExtra("espace", finalData.getMesEspaces().get(indew));
+                                intent.putExtra("espace", finalData.getMesEspaces().get(index));
 //                                System.out.println(sData.get(nB.getId()));
-                                System.out.println(finalData.getMesEspaces().get(indew));
+                                System.out.println(finalData.getMesEspaces().get(index));
                                 intent.putExtra("date", date);
                                 startActivity(intent);
                             }

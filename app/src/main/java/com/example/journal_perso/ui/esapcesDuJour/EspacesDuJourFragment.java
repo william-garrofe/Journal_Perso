@@ -13,12 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.journal_perso.DataEspace;
 import com.example.journal_perso.R;
 import com.example.journal_perso.models.Espace;
 import com.example.journal_perso.models.GsonFic;
 import com.example.journal_perso.models.StructData;
-import com.example.journal_perso.monEspace;
+import com.example.journal_perso.models.User;
+import com.example.journal_perso.services.EspaceService;
 
+import org.json.JSONException;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Vector;
 
@@ -26,12 +31,19 @@ public class EspacesDuJourFragment extends Fragment {
 
     private EspaceDuJourViewModel espaceDuJourViewModel;
     final private GsonFic gf = new GsonFic();
+    final EspaceService espaceService = new EspaceService();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         espaceDuJourViewModel =
                 ViewModelProviders.of(this).get(EspaceDuJourViewModel.class);
         View root = inflater.inflate(R.layout.fragment_espaces_du_jour, container, false);
+
+        final Intent in = getActivity().getIntent();
+        final User usr = (User) in.getSerializableExtra("user");
+
+        //test();
+
         final LinearLayout ll = root.findViewById(R.id.maLayoutEspJ);
         TextView t = root.findViewById(R.id.textV_espJour);
         int annee, mois, jour;
@@ -46,7 +58,7 @@ public class EspacesDuJourFragment extends Fragment {
             annee = calendar.get(calendar.YEAR);
             mois = calendar.get(Calendar.MONTH);
             jour = calendar.get(Calendar.DAY_OF_MONTH);
-            String dateDuJour = " Date du jour :" + jour + "/" + mois + "/" + annee;
+            final String dateDuJour = " Date du jour :" + jour + "/" + mois + "/" + annee;
             t.setText(dateDuJour);
 
             for (int i = 0; i < finalData.getMesEspaces().size(); i++) {
@@ -60,9 +72,11 @@ public class EspacesDuJourFragment extends Fragment {
                     nB.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), monEspace.class);
+                            Intent intent = new Intent(getActivity(), DataEspace.class);
                             intent.putExtra("espace", finalData.getMesEspaces().get(index));
                             intent.putExtra("maData", finalData);
+                            intent.putExtra("date", dateDuJour);
+                            intent.putExtra("user", usr);
                             startActivity(intent);
                         }
                     });
@@ -73,8 +87,24 @@ public class EspacesDuJourFragment extends Fragment {
             maDatas = new StructData();
             maDatas.setMesEspaces(new Vector<Espace>());
         }
-
-
         return root;
+    }
+
+    public void test() {
+        try {
+            espaceService.getListEspace(new EspaceService.OnJSONResponseCallback() {
+                @Override
+                public void onJSONResponse(boolean success, Object object) {
+                    if (object instanceof StructData) {
+                        StructData test = (StructData) object;
+                        System.out.println(test);
+                    }
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.journal_perso.models.GsonFic;
 import com.example.journal_perso.models.User;
 import com.example.journal_perso.services.UserService;
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnOk;
     Button btnInscription;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
         btnOk = (Button) findViewById(R.id.btnConnexion);
         btnInscription = (Button) findViewById(R.id.btnFenInscription);
         final EditText edtLogin = findViewById(R.id.edtLogin);
-        final EditText edtPasse = findViewById(R.id.edtPasse);
+        final EditText edtPasse = findViewById(R.id.editPasse);
 
         final UserService userService = new UserService();
+        final GsonFic gf = new GsonFic();
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onJSONResponse(boolean success, Object object) {
                             if (object instanceof User) {
                                 User usr = (User) object;
-                                System.out.println(usr);
-                                Intent intent = new Intent(MainActivity.this, Inscription.class);
+                                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                                intent.putExtra("user", usr);
+                                gf.ecrireFichier(usr, getApplicationContext(), "user.json");
                                 startActivity(intent);
                             }
                         }
@@ -56,24 +60,10 @@ public class MainActivity extends AppCompatActivity {
         btnInscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                userService.getListUser(new UserService.OnJSONResponseCallback() {
-                    @Override
-                    public void onJSONResponse(boolean success, Object object) {
-
-                    }
-                });
+                Intent intent = new Intent(MainActivity.this, Inscription.class);
+                startActivity(intent);
             }
         });
-
-//        btnInscription.setOnClickListener(new View.OnClickListener()
-//        {
-//            public void onClick(View v)
-//            {
-//                Intent intent = new Intent(MainActivity.this, Inscription.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     public void callBack(View v){

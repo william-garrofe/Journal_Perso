@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,8 +27,13 @@ import com.example.journal_perso.models.Espace;
 import com.example.journal_perso.models.GsonFic;
 import com.example.journal_perso.models.Indicateur;
 import com.example.journal_perso.models.StructData;
+import com.example.journal_perso.models.User;
 import com.example.journal_perso.monEspace;
+import com.example.journal_perso.services.EspaceService;
 
+import org.json.JSONException;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -59,8 +65,11 @@ public class MesEspacesFragment extends Fragment {
         mScrollView = root.findViewById(R.id.scrollView2);
         mListeView = root.findViewById(R.id.list);
         final ArrayList<String> list = new ArrayList<>();
+        final Intent in = getActivity().getIntent();
+        final User usr = (User) in.getSerializableExtra("user");
 
         ListJour = new ArrayList<>();
+        final EspaceService espaceService = new EspaceService();
 
         StructData maDatas = (StructData) gf.LireFichier(getContext(), "monJson.json");
 
@@ -90,6 +99,18 @@ public class MesEspacesFragment extends Fragment {
                         Vector<Indicateur> i = new Vector<>();
                         Espace esp = new Espace(i, input.getText().toString(), finalDatas.getMesEspaces().size() + 1, ListJour); //A faire
                         finalDatas.getMesEspaces().addElement(esp);
+                        try {
+                            espaceService.createEsapce(new EspaceService.OnJSONResponseCallback() {
+                                @Override
+                                public void onJSONResponse(boolean success, Object object) {
+                                    System.out.println(object);
+                                }
+                            }, input.getText().toString(), usr.getIdUser(), getContext());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
                         gf.ecrireFichier(finalDatas, getContext(), "monJson.json");
                         list.add(esp.getNom());
                     }
@@ -110,9 +131,9 @@ public class MesEspacesFragment extends Fragment {
                 AlertDialog.Builder builderJours = new AlertDialog.Builder(getActivity());
                 final ArrayList joursSelect = new ArrayList();
                 builderJours.setTitle("Choisir les jours pour l'espace : ");
-                String[] animals = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
+                String[] jour = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
                 final StructData data = (StructData) gf.LireFichier(getContext(), "monJson.json");
-                builderJours.setMultiChoiceItems(animals, null, new DialogInterface.OnMultiChoiceClickListener() {
+                builderJours.setMultiChoiceItems(jour, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int jour, boolean isChecked) {
                         if (isChecked) {
@@ -152,10 +173,16 @@ public class MesEspacesFragment extends Fragment {
         modifBouton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), monEspace.class);
-                intent.putExtra("maData", finalDatas);
-                intent.putExtra("espace", finalDatas.getMesEspaces().get(pos));
-                startActivity(intent);
+                if (pos != -1) {
+                    Intent intent = new Intent(getActivity(), monEspace.class);
+                    intent.putExtra("maData", finalDatas);
+                    intent.putExtra("espace", finalDatas.getMesEspaces().get(pos));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "Sélectionnez un espace",
+                            Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -163,6 +190,7 @@ public class MesEspacesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                view.setBackgroundColor(Color.WHITE);
                 pos = position;
                 view.setBackgroundColor(Color.CYAN);
             }
