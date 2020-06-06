@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +39,8 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
     private StructData data;
     private LinearLayout ll;
     private int pos = -1;
-    private EditText et, et1;
+    private EditText et1;
+    private TextView et;
     private LinearLayout.LayoutParams p;
     private String mTemps;
 
@@ -47,7 +49,7 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuration_indicateur);
 
-        monIndicateurNom =  findViewById(R.id.nomIndicateur);
+        monIndicateurNom = findViewById(R.id.nomIndicateur);
         monSwitchCreneau = findViewById(R.id.switchCreneau);
         monTempsCreneau = findViewById(R.id.tempsCreneau);
         monButton = findViewById(R.id.buttonAjoutIndicateur);
@@ -109,16 +111,16 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String monText = parent.getItemAtPosition(position).toString();
+        //String monText = parent.getItemAtPosition(position).toString();
         pos = position;
         ll.removeAllViews();
 
         switch (position)
         {
             case 0:
-                et = new EditText(getApplicationContext());
+                et = new TextView(getApplicationContext());
                 et.setLayoutParams(p);
-                et.setHint("Texte");
+                et.setHint("Future texte");
                 ll.addView(et);
                 break;
 
@@ -128,14 +130,10 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
                 monIndicateurNom.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
                     }
-
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                     }
-
                     @Override
                     public void afterTextChanged(Editable s) {
                         cb.setText(monIndicateurNom.getText().toString());
@@ -144,7 +142,6 @@ public class ConfigurationIndicateur extends AppCompatActivity  implements Adapt
                 ll.addView(cb);
                 break;
         }
-        //monSwitchCreneau.setVisibility(view.VISIBLE);
     }
 
     @Override

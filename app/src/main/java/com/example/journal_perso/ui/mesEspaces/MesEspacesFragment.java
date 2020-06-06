@@ -128,32 +128,37 @@ public class MesEspacesFragment extends Fragment {
         btnJours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builderJours = new AlertDialog.Builder(getActivity());
-                final ArrayList joursSelect = new ArrayList();
-                builderJours.setTitle("Choisir les jours pour l'espace : ");
-                String[] jour = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
-                final StructData data = (StructData) gf.LireFichier(getContext(), "monJson.json");
-                builderJours.setMultiChoiceItems(jour, null, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int jour, boolean isChecked) {
-                        if (isChecked) {
-                            joursSelect.add(jour + 1);
-                        } else if (joursSelect.contains(jour + 1)) {
-                            joursSelect.remove(Integer.valueOf(jour + 1));
+                if (pos != -1) {
+                    AlertDialog.Builder builderJours = new AlertDialog.Builder(getActivity());
+                    final ArrayList joursSelect = new ArrayList();
+                    builderJours.setTitle("Choisir les jours pour l'espace : ");
+                    String[] jour = {"Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
+                    final StructData data = (StructData) gf.LireFichier(getContext(), "monJson.json");
+                    builderJours.setMultiChoiceItems(jour, null, new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int jour, boolean isChecked) {
+                            if (isChecked) {
+                                joursSelect.add(jour + 1);
+                            } else if (joursSelect.contains(jour + 1)) {
+                                joursSelect.remove(Integer.valueOf(jour + 1));
+                            }
                         }
-                    }
-                });
+                    });
 
-                builderJours.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        data.getMesEspaces().get(pos).setListJour(joursSelect);
-                        gf.ecrireFichier(data, getContext(), "monJson.json");
-                    }
-                });
-                builderJours.setNegativeButton("Retour", null);
-                AlertDialog dialog = builderJours.create();
-                dialog.show();
+                    builderJours.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            data.getMesEspaces().get(pos).setListJour(joursSelect);
+                            gf.ecrireFichier(data, getContext(), "monJson.json");
+                        }
+                    });
+                    builderJours.setNegativeButton("Retour", null);
+                    AlertDialog dialog = builderJours.create();
+                    dialog.show();
+                } else {
+                    Toast.makeText(getContext(), "Sélectionnez un espace",
+                            Toast.LENGTH_LONG).show();
+                }
             }
 
         });

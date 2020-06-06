@@ -34,7 +34,6 @@ public class DataEspace extends AppCompatActivity {
     private LinearLayout ll;
     private final GsonFic gf = new GsonFic();
     private Espace mEspace;
-    private boolean flag = false;
     private Espace espaceData;
 
     @Override
@@ -51,22 +50,14 @@ public class DataEspace extends AppCompatActivity {
         ll = findViewById(R.id.maLayoutData);
         data = (ListMaDataLocal) gf.LireFichier(getApplicationContext(), "dataJson.json");
 
-        /*for (MaDataLocal currentData: data.getDateData()
-             ) {
-            for (Espace currentEspace: currentData.getMesEspaces()
-                 ) {
-                if(mEspace.getId()==currentEspace.getId()){
-                   espaceData = currentEspace;
-                }
-            }
-        }*/
-
         if (data != null) {
             for (int j = 0; j < data.getDateData().size(); j++) {
                 if (data.getDateData().get(j).getDate().contains(date)) {
                     MaDataLocal currentData = data.getDateData().get(j);
                     for (int k = 0; k < currentData.getMesEspaces().size(); k++) {
-                        espaceData = currentData.getMesEspaces().get(k);
+                        if (currentData.getMesEspaces().get(k).getId() == mEspace.getId()) {
+                            espaceData = currentData.getMesEspaces().get(k);
+                        }
                     }
 
                 }
@@ -87,10 +78,11 @@ public class DataEspace extends AppCompatActivity {
     public Espace affichageEsp(final Espace mEsp) {
 
         if (espaceData != null) {
-            for (int i = 0; i < espaceData.getcIndic().size(); i++)
+            for (int i = 0; i < espaceData.getcIndic().size(); i++) {
                 if (espaceData.getcIndic().get(i).getId() == mEspace.getcIndic().get(i).getId()) {
                     mEspace.getcIndic().get(i).setText(espaceData.getcIndic().get(i).getText());
                 }
+            }
         }
 
         for (int l = 0; l < mEsp.getcIndic().size(); l++) {
