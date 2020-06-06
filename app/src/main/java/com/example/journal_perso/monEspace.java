@@ -11,9 +11,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.journal_perso.models.Espace;
 import com.example.journal_perso.models.StructData;
+import com.example.journal_perso.ui.mesEspaces.MesEspacesFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class monEspace extends AppCompatActivity {
@@ -95,16 +98,16 @@ public class monEspace extends AppCompatActivity {
             }
         }
 
-       /* imageRetour.setOnClickListener(new View.OnClickListener() {
+        imageRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new Fragment();
+                Fragment fragment = new MesEspacesFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_mes_esapces, fragment);
-
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
-        });*/
+        });
 
         monTView = findViewById(R.id.textView5);
         monTView.setText(esp.getNom());
