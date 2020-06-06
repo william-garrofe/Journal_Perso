@@ -65,8 +65,6 @@ public class CalendrierFragment extends Fragment {
                         nB.setLayoutParams(p);
                         nB.setId(i);
                         nB.setText(finalData.getMesEspaces().get(i).getNom());
-                        //e.addElement(finalData.getMesEspaces().get(i));
-                        //sData.addElement(finalData.getMesEspaces().get(i));
                         final int index = i;
                         nB.setOnClickListener(new View.OnClickListener() {
                             @Override

@@ -50,17 +50,17 @@ public class EspacesDuJourFragment extends Fragment {
 
         StructData maDatas = (StructData) gf.LireFichier(getContext(), "monJson.json");
         final StructData finalData = maDatas;
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        annee = calendar.get(calendar.YEAR);
+        mois = calendar.get(Calendar.MONTH);
+        jour = calendar.get(Calendar.DAY_OF_MONTH);
+
+        final String date = jour + "/" + mois + "/" + annee;
+        final String dateDuJour = " Date du jour :" + date;
+        t.setText(dateDuJour);
 
         if (maDatas != null) {
-
-            Calendar calendar = Calendar.getInstance();
-            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-            annee = calendar.get(calendar.YEAR);
-            mois = calendar.get(Calendar.MONTH);
-            jour = calendar.get(Calendar.DAY_OF_MONTH);
-            final String dateDuJour = " Date du jour :" + jour + "/" + mois + "/" + annee;
-            t.setText(dateDuJour);
-
             for (int i = 0; i < finalData.getMesEspaces().size(); i++) {
                 if (finalData.getMesEspaces().get(i).getListJour().contains(dayOfWeek)) {
                     LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -75,7 +75,7 @@ public class EspacesDuJourFragment extends Fragment {
                             Intent intent = new Intent(getActivity(), DataEspace.class);
                             intent.putExtra("espace", finalData.getMesEspaces().get(index));
                             intent.putExtra("maData", finalData);
-                            intent.putExtra("date", dateDuJour);
+                            intent.putExtra("date", date);
                             intent.putExtra("user", usr);
                             startActivity(intent);
                         }

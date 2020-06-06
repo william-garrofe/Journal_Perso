@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.journal_perso.models.Espace;
 import com.example.journal_perso.models.StructData;
-import com.example.journal_perso.ui.mesEspaces.MesEspacesFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class monEspace extends AppCompatActivity {
@@ -101,10 +100,10 @@ public class monEspace extends AppCompatActivity {
         imageRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new MesEspacesFragment();
+                Fragment fragment = new Fragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_mes_esapces, fragment);
-                transaction.addToBackStack(null);
+                //transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
